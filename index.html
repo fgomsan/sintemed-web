@@ -372,8 +372,8 @@
       const fallback = document.getElementById("promoFallbackImg");
 
       function updateVideoSource(code) {
-        const preferred = code === "es" ? "media/sintemed_promo_es.mp4" : "media/sintemed_promo_en.mp4";
-        const candidates = [preferred, "media/sintemed_promo.mp4"];
+        const preferred = "media/sintemed_promo_" + code + ".mp4";
+        const candidates = [preferred, "media/sintemed_promo_en.mp4", "media/sintemed_promo_es.mp4"];
         let idx = 0;
 
         function tryNext() {
