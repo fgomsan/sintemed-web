@@ -3,67 +3,137 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SinteMed — Política de Privacidad / Privacy Policy</title>
+  <title>SinteMed — Política de Privacidad y Verificación / Privacy &amp; Verification</title>
   <link rel="icon" type="image/png" href="media/icon.png" />
   <style>
+    :root {
+      --bg: #08121e;
+      --card: rgba(18, 33, 52, 0.88);
+      --verify-bg: rgba(16, 46, 68, 0.72);
+      --border: rgba(255, 255, 255, 0.12);
+      --border-hi: rgba(94, 234, 212, 0.38);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #5eead4;
+      --link: #7dd3fc;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
-      background: #0b1624;
-      color: #f1f5f9;
-      line-height: 1.65;
+      background:
+        radial-gradient(880px 460px at 50% -80px, rgba(30, 58, 95, 0.55), transparent 70%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.66;
       margin: 0;
-      padding: 48px 20px;
+      padding: 40px 18px 64px;
+      -webkit-font-smoothing: antialiased;
     }
     .wrap {
-      max-width: 820px;
+      max-width: 860px;
       margin: 0 auto;
-      background: rgba(20, 34, 52, 0.86);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 20px;
-      padding: 36px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: clamp(24px, 4vw, 42px);
     }
-    h1 { font-size: 28px; margin-top: 0; }
-    h2 { font-size: 20px; color: #7dd3fc; margin-top: 28px; }
-    a { color: #7dd3fc; }
-    li { margin-bottom: 8px; }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      color: var(--link);
+      text-decoration: none;
+      margin-bottom: 18px;
+    }
+    .back-link:hover { text-decoration: underline; }
+    h1 { font-size: clamp(24px, 3.6vw, 32px); line-height: 1.2; margin: 0 0 8px; }
+    h2 { font-size: 20px; color: var(--link); margin: 30px 0 12px; }
+    h3 { font-size: 16px; color: var(--accent); margin: 18px 0 8px; }
+    a { color: var(--link); }
+    ul, ol { padding-left: 22px; }
+    li { margin-bottom: 10px; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.9em;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+    .verify-box {
+      margin: 28px 0;
+      padding: 24px 26px;
+      border-radius: 18px;
+      background: var(--verify-bg);
+      border: 1px solid var(--border-hi);
+    }
+    .verify-box h2 { margin-top: 0; color: var(--accent); }
+    .meta-line { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+    .footer-note { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <p><a id="backLink" href="index.html">← SinteMed</a></p>
+    <a class="back-link" id="backLink" href="index.html">← Volver a SinteMed / Back to SinteMed</a>
     <script>
       (function () {
         const l = new URLSearchParams(window.location.search).get("lang");
         if (l) document.getElementById("backLink").href = "index.html?lang=" + encodeURIComponent(l);
       })();
     </script>
-    <h1>SinteMed — Política de Privacidad / Privacy Policy</h1>
-    <p><strong>Última actualización / Last updated:</strong> 2026-11-19</p>
+
+    <h1>SinteMed — Política de Privacidad y Verificación Técnica</h1>
+    <p class="meta-line"><strong>Última actualización / Last updated:</strong> 2026-11-19</p>
 
     <h2>1. Responsable y Contacto / Data Controller &amp; Contact</h2>
     <ul>
-      <li><strong>Responsable / Titular del proyecto (Developer &amp; Controller):</strong> Dr. Fernando Gómez Sancha (proyecto personal e independiente · Madrid, España).</li>
-      <li><strong>Contacto de privacidad y soporte / Privacy &amp; Support Contact:</strong> <a href="mailto:contacto@sintemed.app">contacto@sintemed.app</a> · Canal público de soporte: <a href="https://github.com/fgomsan/sintemed-web/issues" rel="noopener">github.com/fgomsan/sintemed-web/issues</a>.</li>
+      <li><strong>Responsable y titular del proyecto / Developer &amp; Controller:</strong> Dr. Fernando Gómez Sancha (proyecto personal e independiente · Madrid, España).</li>
+      <li><strong>Contacto de privacidad y soporte / Privacy &amp; Support Contact:</strong> <a href="mailto:contacto@sintemed.app">contacto@sintemed.app</a> · Canal público de incidencias: <a href="https://github.com/fgomsan/sintemed-web/issues" rel="noopener">github.com/fgomsan/sintemed-web/issues</a>.</li>
     </ul>
 
-    <h2>2. Cero recopilación de datos (Data Not Collected)</h2>
+    <section id="verificacion" class="verify-box">
+      <h2>2. Cómo comprobar tú mismo que ningún dato sale de tu dispositivo</h2>
+      <p>No te pedimos un acto de fe. Cualquier paciente, familiar o médico puede verificar por sí mismo que SinteMed trabaja exclusivamente dentro de su iPhone, iPad o Mac:</p>
+      <ol>
+        <li><strong>Prueba en Modo Avión de principio a fin:</strong> Activa el Modo Avión (desconectando Wi‑Fi y datos móviles) antes de abrir SinteMed. Podrás crear perfiles, fotografiar informes en papel, importar PDFs de laboratorio, leer el texto por OCR, extraer las conclusiones literales y generar el PDF completo para tu médico sin ningún error ni aviso de conexión, porque ningún paso consulta servidores externos.</li>
+        <li><strong>Etiqueta auditada del App Store («No se recopilan datos»):</strong> El manifiesto oficial de privacidad de Apple (<code>PrivacyInfo.xcprivacy</code>) declara <code>NSPrivacyCollectedDataTypes = []</code> y <code>NSPrivacyTracking = false</code>. La aplicación no incluye SDKs publicitarios, ni analítica de uso, ni telemetría externa.</li>
+        <li><strong>Sin cuentas, sin contraseñas en la nube y sin cliente de Internet en Mac:</strong> SinteMed no solicita correo electrónico, número de teléfono ni registro. En macOS, el ejecutable ni siquiera solicita a Apple el permiso de cliente de salida a Internet (<code>com.apple.security.network.client</code>); únicamente emplea red local cuando decides abrir el código QR presencial en la consulta.</li>
+      </ol>
+
+      <h3>How to Verify On-Device Privacy Yourself (English)</h3>
+      <ol>
+        <li><strong>Airplane Mode End-to-End Test:</strong> Turn on Airplane Mode (Wi‑Fi and cellular off) before opening SinteMed. Creating profiles, scanning paper reports, importing PDFs, running OCR, extracting verbatim conclusions, and generating your complete A4 PDF all work offline from start to finish because zero steps contact external servers.</li>
+        <li><strong>Apple App Store “Data Not Collected” Nutrition Label:</strong> SinteMed’s <code>PrivacyInfo.xcprivacy</code> manifest declares <code>NSPrivacyCollectedDataTypes = []</code> and <code>NSPrivacyTracking = false</code>, with zero third-party analytics, crash trackers, or advertising SDKs.</li>
+        <li><strong>Zero Accounts &amp; Sandboxed Network Entitlements:</strong> No sign-up, email, or cloud account exists. On macOS, the app binary does not even request outbound Internet client permission (<code>com.apple.security.network.client</code>).</li>
+      </ol>
+    </section>
+
+    <h2>3. Cero recopilación de datos (Política de Privacidad · Español)</h2>
     <ul>
-      <li><strong>SinteMed</strong> no recopila, no transmite, no almacena en servidores externos ni comparte con terceros ningún dato personal, identificativo, médico ni analítico de uso (<code>NSPrivacyCollectedDataTypes = []</code>, <code>NSPrivacyTracking = false</code>).</li>
-      <li>Toda la información introducida por el usuario y los informes PDF o imágenes adjuntos permanecen cifrados exclusivamente dentro del propio dispositivo (iPhone, iPad o Mac) mediante <code>AES-256-GCM</code> con llave custodiada en el Llavero local de Apple (<code>ThisDeviceOnly</code>).</li>
-      <li>El reconocimiento óptico de texto (OCR), la extracción literal de conclusiones, el pulido opcional con inteligencia artificial local (cuando el dispositivo lo admite) y el montaje documental funcionan íntegramente en el procesador local del dispositivo, sin enviar documentos ni textos a modelos en la nube.</li>
-      <li>Las compras integradas se gestionan exclusivamente a través de <strong>Apple StoreKit 2</strong> sin crear cuentas propias ni almacenar datos de pago por parte del desarrollador.</li>
-      <li>Los datos solo salen del dispositivo cuando el propio usuario decide voluntariamente imprimirlos, compartirlos mediante la hoja del sistema o mostrarlos presencialmente mediante código QR en la red local Wi‑Fi.</li>
+      <li><strong>SinteMed</strong> no recopila, no transmite, no almacena en servidores propios ni de terceros, ni comparte ningún dato personal, identificativo, familiar o médico.</li>
+      <li>Los datos solo salen de tu dispositivo cuando tú decides voluntariamente imprimirlos en papel, compartir el archivo mediante la hoja estándar del sistema operativo o mostrar temporalmente el código QR en la red Wi‑Fi local durante la consulta.</li>
+      <li><strong>Alcance no sanitario:</strong> SinteMed es una herramienta personal de archivo y ordenación documental (fuera de la definición de producto sanitario conforme al Reglamento UE 2017/745 Art. 2.1 y guía MDCG 2019-11 § 3.2). No diagnostica, no interpreta valores analíticos ni recomienda tratamientos.</li>
     </ul>
 
-    <h2>3. Zero Data Collection (English Summary)</h2>
+    <h2>4. Zero Data Collection (Privacy Policy · English)</h2>
     <ul>
-      <li><strong>SinteMed</strong> collects, transmits, and stores <strong>zero</strong> personal, health, or usage data on any external server.</li>
-      <li>All profiles, visit records, and attached PDFs live exclusively inside an <code>AES-256-GCM</code> encrypted vault on the user’s own iPhone, iPad, or Mac, protected by a hardware-bound local Apple Keychain key.</li>
-      <li>OCR, verbatim conclusion extraction, optional on-device AI sentence polishing (when supported by hardware), and PDF assembly execute 100% locally on-device with zero cloud API calls, and In-App Purchases are handled natively via Apple <strong>StoreKit 2</strong>.</li>
-      <li>Non-medical device scope (EU MDR 2017/745 Art. 2(1) / MDCG 2019-11 § 3.2): SinteMed is a personal document-organization tool and does not diagnose, interpret lab values, calculate clinical risk, or provide medical advice.</li>
+      <li><strong>SinteMed</strong> collects, transmits, and stores <strong>zero</strong> personal, family, health, or usage data on any external server.</li>
+      <li>Your documents leave your device only when you explicitly print them, share them via the system share sheet, or display a temporary local Wi‑Fi QR code inside the consultation room.</li>
+      <li><strong>Non-medical device scope (EU MDR 2017/745 Art. 2(1) / MDCG 2019-11 § 3.2):</strong> SinteMed is a personal document-organization tool and never diagnoses, interprets lab values, calculates clinical risk, or provides medical advice.</li>
     </ul>
 
-    <p style="margin-top:32px;color:#94a3b8;font-size:14px;">Dr. Fernando Gómez Sancha · Proyecto personal e independiente.</p>
+    <h2>5. Arquitectura criptográfica y estándares técnicos / Technical Architecture</h2>
+    <p>Para lectores técnicos, responsables de seguridad hospitalaria e informáticos clínicos, este es el detalle de cómo se protegen los documentos en el dispositivo:</p>
+    <ul>
+      <li><strong>Bóveda cifrada en reposo:</strong> Todos los perfiles, visitas y adjuntos PDF o imagen se guardan cifrados en disco con <code>AES-256-GCM</code> (<code>Apple CryptoKit</code>) empleando una clave maestra de 256 bits custodiada en el Llavero físico de Apple con atributo <code>kSecAttrAccessibleWhenUnlockedThisDeviceOnly</code>.</li>
+      <li><strong>Procesamiento local:</strong> El reconocimiento óptico de texto (<code>Apple Vision</code>), el extractor determinista de apartados de conclusión, el pulido gramatical opcional con el modelo local del sistema (cuando el hardware es compatible) y el motor tipográfico <code>PDFKit</code> / <code>CoreText</code> se ejecutan 100 % en local.</li>
+      <li><strong>Copias de seguridad cifradas (<code>.mivisita</code>):</strong> Exportación e importación protegidas con contraseña elegida por el usuario mediante derivación <code>PBKDF2-HMAC-SHA256</code> (<code>310.000</code> iteraciones) y cifrado autenticado <code>AES-256-GCM</code>.</li>
+      <li><strong>Entrega opcional protegida e interoperabilidad:</strong> Posibilidad de cifrar el PDF generado con contraseña estándar <code>AES-128</code>, servidor efímero solo en memoria RAM con token aleatorio de un solo uso para el código QR en red local, y exportación estructurada compatible con el estándar internacional <strong>HL7 FHIR R4 International Patient Summary (IPS)</strong>.</li>
+      <li><strong>Compras integradas sin cuentas propias:</strong> El desbloqueo único universal (iPhone, iPad, Mac y <em>En familia</em>) se procesa de forma nativa mediante <strong>Apple StoreKit 2</strong> sin recopilar datos de pago ni identificadores personales fuera de Apple.</li>
+    </ul>
+
+    <p class="footer-note">Dr. Fernando Gómez Sancha · Proyecto personal e independiente · <a href="mailto:contacto@sintemed.app">contacto@sintemed.app</a></p>
   </div>
 </body>
 </html>
