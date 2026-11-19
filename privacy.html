@@ -50,7 +50,7 @@
     <ul>
       <li><strong>SinteMed</strong> no recopila, no transmite, no almacena en servidores externos ni comparte con terceros ningún dato personal, identificativo, médico ni analítico de uso (<code>NSPrivacyCollectedDataTypes = []</code>, <code>NSPrivacyTracking = false</code>).</li>
       <li>Toda la información introducida por el usuario y los informes PDF o imágenes adjuntos permanecen cifrados exclusivamente dentro del propio dispositivo (iPhone, iPad o Mac) mediante <code>AES-256-GCM</code> con llave custodiada en el Llavero local de Apple (<code>ThisDeviceOnly</code>).</li>
-      <li>El reconocimiento óptico de texto (OCR), la extracción literal de conclusiones y el montaje documental funcionan íntegramente en el procesador local del dispositivo, sin enviar documentos ni textos a modelos en la nube.</li>
+      <li>El reconocimiento óptico de texto (OCR), la extracción literal de conclusiones, el pulido opcional con inteligencia artificial local (cuando el dispositivo lo admite) y el montaje documental funcionan íntegramente en el procesador local del dispositivo, sin enviar documentos ni textos a modelos en la nube.</li>
       <li>Las compras integradas se gestionan exclusivamente a través de <strong>Apple StoreKit 2</strong> sin crear cuentas propias ni almacenar datos de pago por parte del desarrollador.</li>
       <li>Los datos solo salen del dispositivo cuando el propio usuario decide voluntariamente imprimirlos, compartirlos mediante la hoja del sistema o mostrarlos presencialmente mediante código QR en la red local Wi‑Fi.</li>
     </ul>
@@ -59,7 +59,7 @@
     <ul>
       <li><strong>SinteMed</strong> collects, transmits, and stores <strong>zero</strong> personal, health, or usage data on any external server.</li>
       <li>All profiles, visit records, and attached PDFs live exclusively inside an <code>AES-256-GCM</code> encrypted vault on the user’s own iPhone, iPad, or Mac, protected by a hardware-bound local Apple Keychain key.</li>
-      <li>OCR and verbatim conclusion extraction execute 100% locally on-device with zero cloud API calls, and In-App Purchases are handled natively via Apple <strong>StoreKit 2</strong>.</li>
+      <li>OCR, verbatim conclusion extraction, optional on-device AI sentence polishing (when supported by hardware), and PDF assembly execute 100% locally on-device with zero cloud API calls, and In-App Purchases are handled natively via Apple <strong>StoreKit 2</strong>.</li>
       <li>Non-medical device scope (EU MDR 2017/745 Art. 2(1) / MDCG 2019-11 § 3.2): SinteMed is a personal document-organization tool and does not diagnose, interpret lab values, calculate clinical risk, or provide medical advice.</li>
     </ul>
 
