@@ -714,16 +714,16 @@
         <div class="showcase-grid">
           <div class="showcase-panel">
             <span class="story-tag" data-i18n="pdfCardBadge"></span>
-            <button type="button" class="paper-sheet-btn" data-zoom-src="media/pdf_sample_a4.png" aria-label="Ampliar hoja A4 de resumen médico">
-              <img src="media/pdf_sample_a4.png" alt="Hoja A4 real generada por SinteMed con conclusiones literales, medicación, alergias e índice paginado" />
+            <button type="button" id="pdfShowcaseBtn" class="paper-sheet-btn" data-zoom-src="media/pdf_sample_a4_es.png" aria-label="Ampliar hoja A4 de resumen médico">
+              <img id="pdfShowcaseImg" src="media/pdf_sample_a4_es.png" alt="Hoja A4 real generada por SinteMed con conclusiones literales, medicación, alergias e índice paginado" />
             </button>
             <p class="showcase-caption" data-i18n="pdfCardCaption"></p>
           </div>
 
           <div class="showcase-panel">
             <span class="story-tag" data-i18n="phoneCardBadge"></span>
-            <button type="button" class="phone-frame-btn" data-zoom-src="media/iphone_step7_review.png" aria-label="Ampliar pantalla de revisión en iPhone">
-              <img src="media/iphone_step7_review.png" alt="Pantalla de revisión de SinteMed en iPhone: Revisa tu resumen antes de generarlo" />
+            <button type="button" id="phoneShowcaseBtn" class="phone-frame-btn" data-zoom-src="media/iphone_step7_review_es.png" aria-label="Ampliar pantalla de revisión en iPhone">
+              <img id="phoneShowcaseImg" src="media/iphone_step7_review_es.png" alt="Pantalla de revisión de SinteMed en iPhone: Revisa tu resumen antes de generarlo" />
             </button>
             <p class="showcase-caption" data-i18n="phoneCardCaption"></p>
           </div>
@@ -952,6 +952,25 @@
             });
             container.appendChild(box);
           });
+        }
+
+        const pdfSrc = "media/pdf_sample_a4_" + code + ".png";
+        const phoneSrc = "media/iphone_step7_review_" + code + ".png";
+        const pdfBtn = document.getElementById("pdfShowcaseBtn");
+        const pdfImg = document.getElementById("pdfShowcaseImg");
+        if (pdfBtn && pdfImg) {
+          pdfBtn.setAttribute("data-zoom-src", pdfSrc);
+          if (dict.pdfZoomAria) pdfBtn.setAttribute("aria-label", dict.pdfZoomAria);
+          pdfImg.setAttribute("src", pdfSrc);
+          if (dict.pdfImgAlt) pdfImg.setAttribute("alt", dict.pdfImgAlt);
+        }
+        const phoneBtn = document.getElementById("phoneShowcaseBtn");
+        const phoneImg = document.getElementById("phoneShowcaseImg");
+        if (phoneBtn && phoneImg) {
+          phoneBtn.setAttribute("data-zoom-src", phoneSrc);
+          if (dict.phoneZoomAria) phoneBtn.setAttribute("aria-label", dict.phoneZoomAria);
+          phoneImg.setAttribute("src", phoneSrc);
+          if (dict.phoneImgAlt) phoneImg.setAttribute("alt", dict.phoneImgAlt);
         }
 
         updateVideoSource(code);
