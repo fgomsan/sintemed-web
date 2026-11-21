@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SinteMed — Soporte, Fallos y Sugerencias</title>
+  <link rel="icon" type="image/png" href="media/icon.png" />
+  <style>
+    :root {
+      --bg: #f6f3ec;
+      --card: #ffffff;
+      --surface-soft: #eef2f6;
+      --warn-bg: #e2f4ee;
+      --warn-ink: #0a5240;
+      --text: #161b22;
+      --muted: #525d6b;
+      --slate: #294d73;
+      --primary: #0d6b53;
+      --border: rgba(26, 32, 40, 0.11);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #15171a;
+        --card: #1f2227;
+        --surface-soft: #282c33;
+        --warn-bg: #13332b;
+        --warn-ink: #9fe8d2;
+        --text: #f1f5f9;
+        --muted: #9aa6b8;
+        --slate: #2d5680;
+        --primary: #0f755b;
+        --border: rgba(255, 255, 255, 0.11);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 34px 16px 60px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap {
+      max-width: 740px;
+      margin: 0 auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: clamp(22px, 4vw, 38px);
+      box-shadow: 0 10px 30px rgba(20, 25, 32, 0.05);
+    }
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .back-link {
+      font-weight: 600;
+      color: var(--slate);
+      text-decoration: none;
+    }
+    @media (prefers-color-scheme: dark) { .back-link { color: #9cc2e8; } }
+    .back-link:hover { text-decoration: underline; }
+    select.lang-picker {
+      background: var(--surface-soft);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    h1 { font-size: clamp(23px, 3.6vw, 30px); line-height: 1.22; margin: 0 0 10px; }
+    .sub { color: var(--muted); margin: 0 0 18px; font-size: 16px; }
+    .privacy-box {
+      background: var(--warn-bg);
+      color: var(--warn-ink);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .kind-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    @media (max-width: 520px) { .kind-row { grid-template-columns: 1fr; } }
+    .kind-btn {
+      padding: 13px 16px;
+      border-radius: 13px;
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+      color: var(--text);
+      font-size: 15.5px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+    }
+    .kind-btn.active {
+      background: var(--slate);
+      color: #ffffff;
+      border-color: var(--slate);
+    }
+    .tech-pill {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 13px;
+      color: var(--muted);
+      background: var(--surface-soft);
+      padding: 9px 12px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+    }
+    label.field-label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 7px;
+      font-size: 15px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 132px;
+      border-radius: 13px;
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+      color: var(--text);
+      padding: 13px 14px;
+      font-family: inherit;
+      font-size: 16px;
+      line-height: 1.5;
+      resize: vertical;
+      margin-bottom: 18px;
+    }
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+    .btn-primary, .btn-secondary {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      min-height: 52px;
+      padding: 13px 20px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      text-align: center;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .btn-secondary {
+      background: var(--surface-soft);
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .foot {
+      margin-top: 22px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .foot a { color: inherit; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top-row">
+      <a class="back-link" id="backLink" href="index.html">← SinteMed</a>
+      <select class="lang-picker" id="langSelect" aria-label="Language">
+        <option value="es">ES · Español</option>
+        <option value="en">EN · English</option>
+        <option value="fr">FR · Français</option>
+        <option value="de">DE · Deutsch</option>
+        <option value="it">IT · Italiano</option>
+        <option value="pt">PT · Português</option>
+        <option value="bg">BG · Български</option>
+        <option value="ru">RU · Русский</option>
+        <option value="ro">RO · Română</option>
+        <option value="uk">UK · Українська</option>
+      </select>
+    </div>
+
+    <h1 id="titleEl">Informar de un fallo o sugerir una mejora</h1>
+    <p class="sub" id="subEl">Tu mensaje nos ayuda a pulir SinteMed para pacientes y médicos. Esta página no usa cookies ni envía nada por sí sola: prepara un correo para que lo revises y envíes desde tu gestor habitual.</p>
+
+    <div class="privacy-box" id="privEl">
+      Privacidad ante todo: no escribas ni adjuntes nombres de pacientes, informes ni datos médicos personales.
+    </div>
+
+    <div class="kind-row">
+      <button type="button" class="kind-btn active" id="btnBug">Informar de un fallo</button>
+      <button type="button" class="kind-btn" id="btnIdea">Sugerir una mejora</button>
+    </div>
+
+    <div class="tech-pill" id="techPill">SinteMed · contacto@sintemed.app</div>
+
+    <label class="field-label" for="msgBox" id="msgLabel">Tu descripción o sugerencia (opcional antes de abrir el correo):</label>
+    <textarea id="msgBox" placeholder="Describe qué ocurrió o qué mejora te resultaría útil…"></textarea>
+
+    <div class="actions">
+      <a class="btn-primary" id="mailtoBtn" href="mailto:contacto@sintemed.app">Enviar con mi aplicación de correo (contacto@sintemed.app)</a>
+      <button type="button" class="btn-secondary" id="copyBtn">Copiar dirección contacto@sintemed.app y texto</button>
+    </div>
+
+    <p class="foot">
+      <span id="ghPrefix">Canal público alternativo en GitHub:</span>
+      <a href="https://github.com/fgomsan/sintemed-web/issues" rel="noopener">github.com/fgomsan/sintemed-web/issues</a>
+    </p>
+  </div>
+
+  <script>
+    (function () {
+      const COPY = {
+        es: {
+          title: "Informar de un fallo o sugerir una mejora",
+          sub: "Tu mensaje nos ayuda a pulir SinteMed para pacientes y médicos. Esta página no usa cookies ni envía nada automáticamente: prepara un correo hacia contacto@sintemed.app.",
+          priv: "Privacidad ante todo: por favor, no escribas ni adjuntes nombres de pacientes, informes ni datos médicos personales.",
+          bug: "Informar de un fallo",
+          idea: "Sugerir una mejora",
+          label: "Tu descripción o sugerencia (opcional):",
+          ph: "Describe qué estabas haciendo o qué mejora te resultaría útil…",
+          send: "Abrir en mi aplicación de correo (contacto@sintemed.app)",
+          copy: "Copiar contacto@sintemed.app y texto preparado",
+          copied: "Copiado al portapapeles",
+          gh: "Canal público alternativo en GitHub:",
+          subjBug: "[SinteMed · Fallo]",
+          subjIdea: "[SinteMed · Sugerencia]"
+        },
+        en: {
+          title: "Report a bug or suggest an improvement",
+          sub: "Your feedback helps us refine SinteMed for patients and clinicians. This page uses zero cookies and sends nothing automatically: it prepares an email to contacto@sintemed.app.",
+          priv: "Privacy first: please never include patient names, medical reports, or personal health details.",
+          bug: "Report a bug",
+          idea: "Suggest an improvement",
+          label: "Your description or suggestion (optional):",
+          ph: "Describe what happened or what improvement would help you…",
+          send: "Open in my email app (contacto@sintemed.app)",
+          copy: "Copy contacto@sintemed.app & prepared text",
+          copied: "Copied to clipboard",
+          gh: "Public GitHub issue tracker:",
+          subjBug: "[SinteMed · Bug report]",
+          subjIdea: "[SinteMed · Improvement]"
+        },
+        fr: {
+          title: "Signaler un problème ou suggérer une amélioration",
+          sub: "Vos retours nous aident à améliorer SinteMed. Cette page n’utilise aucun cookie et prépare simplement un courriel vers contacto@sintemed.app.",
+          priv: "Confidentialité avant tout : veuillez ne jamais inclure de noms de patients ni de données ou comptes rendus médicaux.",
+          bug: "Signaler un problème",
+          idea: "Suggérer une amélioration",
+          label: "Votre description ou suggestion (facultatif) :",
+          ph: "Décrivez le comportement observé ou l’amélioration souhaitée…",
+          send: "Ouvrir dans ma messagerie (contacto@sintemed.app)",
+          copy: "Copier contacto@sintemed.app et le texte",
+          copied: "Copié dans le presse-papiers",
+          gh: "Suivi public sur GitHub :",
+          subjBug: "[SinteMed · Problème]",
+          subjIdea: "[SinteMed · Suggestion]"
+        },
+        de: {
+          title: "Fehler melden oder Verbesserung vorschlagen",
+          sub: "Ihre Rückmeldung hilft uns, SinteMed weiter zu verbessern. Diese Seite verwendet keine Cookies und bereitet lediglich eine E-Mail an contacto@sintemed.app vor.",
+          priv: "Datenschutz zuerst: Bitte fügen Sie niemals Patientennamen, Befunde oder persönliche Gesundheitsdaten bei.",
+          bug: "Fehler melden",
+          idea: "Verbesserung vorschlagen",
+          label: "Ihre Beschreibung oder Ihr Vorschlag (optional):",
+          ph: "Beschreiben Sie kurz das Problem oder Ihren Vorschlag…",
+          send: "In meinem E-Mail-Programm öffnen (contacto@sintemed.app)",
+          copy: "contacto@sintemed.app und Text kopieren",
+          copied: "In die Zwischenablage kopiert",
+          gh: "Öffentlicher Kanal auf GitHub:",
+          subjBug: "[SinteMed · Fehler]",
+          subjIdea: "[SinteMed · Vorschlag]"
+        },
+        it: {
+          title: "Segnala un problema o suggerisci un miglioramento",
+          sub: "Il tuo messaggio ci aiuta a migliorare SinteMed. Questa pagina non usa cookie e prepara semplicemente un’email verso contacto@sintemed.app.",
+          priv: "Privacy prima di tutto: non inserire mai nomi di pazienti, referti o dati medici personali.",
+          bug: "Segnala un problema",
+          idea: "Suggerisci un miglioramento",
+          label: "La tua descrizione o proposta (facoltativa):",
+          ph: "Descrivi cosa è successo o quale miglioramento ti sarebbe utile…",
+          send: "Apri nella mia app email (contacto@sintemed.app)",
+          copy: "Copia contacto@sintemed.app e testo",
+          copied: "Copiato negli appunti",
+          gh: "Canale pubblico su GitHub:",
+          subjBug: "[SinteMed · Problema]",
+          subjIdea: "[SinteMed · Suggerimento]"
+        },
+        pt: {
+          title: "Comunicar um erro ou sugerir uma melhoria",
+          sub: "A sua mensagem ajuda-nos a melhorar o SinteMed. Esta página não utiliza cookies e prepara apenas um e-mail para contacto@sintemed.app.",
+          priv: "Privacidade em primeiro lugar: por favor, nunca inclua nomes de utentes, relatórios nem dados médicos pessoais.",
+          bug: "Comunicar um erro",
+          idea: "Sugerir uma melhoria",
+          label: "A sua descrição ou sugestão (opcional):",
+          ph: "Descreva o que aconteceu ou que melhoria seria útil…",
+          send: "Abrir na minha aplicação de e-mail (contacto@sintemed.app)",
+          copy: "Copiar contacto@sintemed.app e texto",
+          copied: "Copiado para a área de transferência",
+          gh: "Canal público no GitHub:",
+          subjBug: "[SinteMed · Erro]",
+          subjIdea: "[SinteMed · Sugestão]"
+        },
+        bg: {
+          title: "Съобщете за грешка или предложете подобрение",
+          sub: "Вашата обратна връзка помага да подобрим SinteMed. Страницата не използва бисквитки и само подготвя имейл до contacto@sintemed.app.",
+          priv: "Поверителност преди всичко: моля, не включвайте имена на пациенти, медицински изследвания или лични здравни данни.",
+          bug: "Съобщете за грешка",
+          idea: "Предложете подобрение",
+          label: "Вашето описание или предложение (по избор):",
+          ph: "Опишете какво се случи или какво подобрение би било полезно…",
+          send: "Отворете в приложението за поща (contacto@sintemed.app)",
+          copy: "Копирайте contacto@sintemed.app и текста",
+          copied: "Копирано в клипборда",
+          gh: "Публичен канал в GitHub:",
+          subjBug: "[SinteMed · Грешка]",
+          subjIdea: "[SinteMed · Предложение]"
+        },
+        ru: {
+          title: "Сообщить об ошибке или предложить улучшение",
+          sub: "Ваш отзыв помогает сделать SinteMed удобнее и надёжнее. Страница не использует файлы cookie и лишь подготавливает письмо на адрес contacto@sintemed.app.",
+          priv: "Конфиденциальность прежде всего: пожалуйста, не указывайте имена пациентов и не прикладывайте медицинские заключения или личные данные о здоровье.",
+          bug: "Сообщить об ошибке",
+          idea: "Предложить улучшение",
+          label: "Ваше описание или предложение (необязательно):",
+          ph: "Опишите, что произошло или какое улучшение было бы полезно…",
+          send: "Открыть в почтовом приложении (contacto@sintemed.app)",
+          copy: "Скопировать contacto@sintemed.app и текст",
+          copied: "Скопировано в буфер обмена",
+          gh: "Публичный раздел на GitHub:",
+          subjBug: "[SinteMed · Ошибка]",
+          subjIdea: "[SinteMed · Предложение]"
+        },
+        ro: {
+          title: "Semnalați o eroare sau sugerați o îmbunătățire",
+          sub: "Mesajul dumneavoastră ne ajută să îmbunătățim SinteMed. Această pagină nu folosește cookie-uri și doar pregătește un e-mail către contacto@sintemed.app.",
+          priv: "Confidențialitatea pe primul loc: vă rugăm să nu includeți nume de pacienți, rapoarte medicale sau date personale de sănătate.",
+          bug: "Semnalați o eroare",
+          idea: "Sugerați o îmbunătățire",
+          label: "Descrierea sau sugestia dumneavoastră (opțional):",
+          ph: "Descrieți ce s-a întâmplat sau ce îmbunătățire v-ar fi utilă…",
+          send: "Deschideți în aplicația de e-mail (contacto@sintemed.app)",
+          copy: "Copiați contacto@sintemed.app și textul",
+          copied: "Copiat în clipboard",
+          gh: "Canal public pe GitHub:",
+          subjBug: "[SinteMed · Eroare]",
+          subjIdea: "[SinteMed · Sugestie]"
+        },
+        uk: {
+          title: "Повідомити про помилку або запропонувати покращення",
+          sub: "Ваш відгук допомагає вдосконалювати SinteMed. Ця сторінка не використовує cookie та лише готує лист на адресу contacto@sintemed.app.",
+          priv: "Конфіденційність понад усе: будь ласка, не вказуйте імена пацієнтів і не додавайте медичні висновки чи особисті дані про здоров’я.",
+          bug: "Повідомити про помилку",
+          idea: "Запропонувати покращення",
+          label: "Ваш опис або пропозиція (необов’язково):",
+          ph: "Опишіть, що сталося або яке покращення було б корисним…",
+          send: "Відкрити у поштовому додатку (contacto@sintemed.app)",
+          copy: "Скопіювати contacto@sintemed.app і текст",
+          copied: "Скопійовано до буфера обміну",
+          gh: "Публічний канал на GitHub:",
+          subjBug: "[SinteMed · Помилка]",
+          subjIdea: "[SinteMed · Пропозиція]"
+        }
+      };
+
+      const hashParams = new URLSearchParams((window.location.hash || "").replace(/^#/, ""));
+      const queryParams = new URLSearchParams(window.location.search);
+      const rawLang = (hashParams.get("lang") || queryParams.get("lang") || (navigator.language || "es").slice(0, 2)).toLowerCase();
+      let lang = COPY[rawLang] ? rawLang : "es";
+      let kind = (hashParams.get("kind") === "improvement") ? "improvement" : "bug";
+      const ver = hashParams.get("v") || "1.0";
+      const bld = hashParams.get("b") || "";
+      const os = hashParams.get("os") || "";
+
+      const langSelect = document.getElementById("langSelect");
+      const btnBug = document.getElementById("btnBug");
+      const btnIdea = document.getElementById("btnIdea");
+      const msgBox = document.getElementById("msgBox");
+      const mailtoBtn = document.getElementById("mailtoBtn");
+      const copyBtn = document.getElementById("copyBtn");
+      const techPill = document.getElementById("techPill");
+
+      function techLine() {
+        const parts = ["SinteMed " + ver + (bld ? " (" + bld + ")" : "")];
+        if (os) parts.push(os);
+        parts.push(lang.toUpperCase());
+        return parts.join(" · ");
+      }
+
+      function updateMailto() {
+        const c = COPY[lang];
+        const subj = (kind === "improvement" ? c.subjIdea : c.subjBug) + " " + techLine();
+        const userText = (msgBox.value || "").trim();
+        const body = (userText ? userText + "\n\n---\n" : "\n\n---\n") + techLine();
+        mailtoBtn.href = "mailto:contacto@sintemed.app?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(body);
+      }
+
+      function render() {
+        const c = COPY[lang];
+        document.documentElement.lang = lang;
+        langSelect.value = lang;
+        document.getElementById("backLink").href = "index.html?lang=" + encodeURIComponent(lang);
+        document.getElementById("titleEl").textContent = c.title;
+        document.getElementById("subEl").textContent = c.sub;
+        document.getElementById("privEl").textContent = c.priv;
+        btnBug.textContent = c.bug;
+        btnIdea.textContent = c.idea;
+        btnBug.classList.toggle("active", kind === "bug");
+        btnIdea.classList.toggle("active", kind === "improvement");
+        document.getElementById("msgLabel").textContent = c.label;
+        msgBox.placeholder = c.ph;
+        mailtoBtn.textContent = c.send;
+        copyBtn.textContent = c.copy;
+        document.getElementById("ghPrefix").textContent = c.gh;
+        techPill.textContent = "contacto@sintemed.app · " + techLine();
+        updateMailto();
+      }
+
+      langSelect.addEventListener("change", function () { lang = langSelect.value; render(); });
+      btnBug.addEventListener("click", function () { kind = "bug"; render(); });
+      btnIdea.addEventListener("click", function () { kind = "improvement"; render(); });
+      msgBox.addEventListener("input", updateMailto);
+      copyBtn.addEventListener("click", function () {
+        const c = COPY[lang];
+        const subj = (kind === "improvement" ? c.subjIdea : c.subjBug) + " " + techLine();
+        const payload = "Para / To: contacto@sintemed.app\nAsunto / Subject: " + subj + "\n\n" + (msgBox.value || "");
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(payload);
+        }
+        copyBtn.textContent = "✓ " + c.copied;
+        setTimeout(function () { copyBtn.textContent = COPY[lang].copy; }, 2200);
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>
