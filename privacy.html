@@ -84,7 +84,7 @@
     </script>
 
     <h1>SinteMed — Política de Privacidad y Verificación Técnica</h1>
-    <p class="meta-line"><strong>Última actualización / Last updated:</strong> 2026-11-19</p>
+    <p class="meta-line"><strong>Última actualización / Last updated:</strong> 2026-11-22</p>
 
     <h2>1. Responsable y Contacto / Data Controller &amp; Contact</h2>
     <ul>
@@ -127,10 +127,16 @@
     <p>Para lectores técnicos, responsables de seguridad hospitalaria e informáticos clínicos, este es el detalle de cómo se protegen los documentos en el dispositivo:</p>
     <ul>
       <li><strong>Bóveda cifrada en reposo:</strong> Todos los perfiles, visitas y adjuntos PDF o imagen se guardan cifrados en disco con <code>AES-256-GCM</code> (<code>Apple CryptoKit</code>) empleando una clave maestra de 256 bits custodiada en el Llavero físico de Apple con atributo <code>kSecAttrAccessibleWhenUnlockedThisDeviceOnly</code>.</li>
-      <li><strong>Procesamiento local:</strong> El reconocimiento óptico de texto (<code>Apple Vision</code>), el extractor determinista de apartados de conclusión, el pulido gramatical opcional con el modelo local del sistema (cuando el hardware es compatible) y el motor tipográfico <code>PDFKit</code> / <code>CoreText</code> se ejecutan 100 % en local.</li>
+      <li><strong>Procesamiento 100 % local y cero IA generativa sobre informes médicos:</strong> El reconocimiento óptico de texto (<code>Apple Vision</code>), el extractor determinista literal de apartados de conclusión (que jamás envía informes clínicos, alergias ni medicación a modelos generativos) y el motor tipográfico <code>PDFKit</code> / <code>CoreText</code> se ejecutan 100 % en local. La asistencia opcional con el modelo integrado del sistema (<code>Apple FoundationModels</code> en dispositivos compatibles) se limita exclusivamente a ordenar la redacción propia del paciente en el motivo de consulta (Paso 1) y la evolución (Paso 5), bajo verificación determinista.</li>
       <li><strong>Copias de seguridad cifradas (<code>.mivisita</code>):</strong> Exportación e importación protegidas con contraseña elegida por el usuario mediante derivación <code>PBKDF2-HMAC-SHA256</code> (<code>310.000</code> iteraciones) y cifrado autenticado <code>AES-256-GCM</code>.</li>
-      <li><strong>Entrega opcional protegida e interoperabilidad:</strong> Posibilidad de cifrar el PDF generado con contraseña estándar <code>AES-128</code>, servidor efímero solo en memoria RAM con token aleatorio de un solo uso para el código QR en red local, y exportación estructurada compatible con el estándar internacional <strong>HL7 FHIR R4 International Patient Summary (IPS)</strong>.</li>
-      <li><strong>Compras integradas sin cuentas propias:</strong> El desbloqueo único universal (iPhone, iPad, Mac y <em>En familia</em>) se procesa de forma nativa mediante <strong>Apple StoreKit 2</strong> sin recopilar datos de pago ni identificadores personales fuera de Apple.</li>
+      <li><strong>Entrega opcional protegida e interoperabilidad:</strong> Posibilidad de cifrar el PDF generado con contraseña estándar <code>AES-128</code> (caracteres ASCII estándar), servidor efímero solo en memoria RAM con token aleatorio de un solo uso para el código QR en red local, y exportación estructurada compatible con el estándar internacional <strong>HL7 FHIR R4 International Patient Summary (IPS)</strong>.</li>
+      <li><strong>Compras integradas sin cuentas propias:</strong> El desbloqueo único universal (iPhone, iPad, Mac y <em>En familia</em>) se gestiona mediante <strong>Apple StoreKit 2</strong> a través del demonio del sistema (<code>storekitd</code> por XPC en macOS, sin conceder permiso de red saliente a la app) y sin recopilar datos de pago ni identificadores personales fuera de Apple.</li>
+    </ul>
+
+    <h2>6. Conservación y borrado inmediato de datos / Data Retention &amp; Deletion</h2>
+    <ul>
+      <li><strong>Control exclusivo del usuario en su dispositivo:</strong> Todos los datos permanecen únicamente en tu dispositivo mientras tú decidas conservarlos. Puedes borrar informes individuales, consultas o perfiles completos en cualquier momento, usar la opción <em>Ajustes y Copia → Borrar todos los datos locales</em> para eliminar al instante la bóveda cifrada y su clave del Llavero, o desinstalar la aplicación.</li>
+      <li><strong>User-controlled local retention &amp; instant deletion (English):</strong> All records live solely on your device for as long as you keep them. You can delete individual reports, visits, or profiles at any time, use <em>Settings &amp; Backup → Erase all local data</em> to wipe the encrypted vault and Keychain key immediately, or uninstall the app—leaving zero copies on any server.</li>
     </ul>
 
     <p class="footer-note">Dr. Fernando Gómez Sancha · Proyecto personal e independiente · <a href="mailto:contacto@sintemed.app">contacto@sintemed.app</a></p>
