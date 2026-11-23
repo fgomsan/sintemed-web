@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SinteMed — Tus informes médicos ordenados. Toda la consulta para hablar con tu médico.</title>
-  <meta name="description" content="Prepara tus consultas médicas o las de tus padres en iPhone, iPad y Mac: medicación, alergias, dudas e informes ordenados en una hoja A4 clara con tus originales detrás. 1.ª visita gratis, después 9,99 € pago único." />
+  <meta name="description" content="Prepara tus consultas médicas o las de tus padres en iPhone, iPad y Mac: medicación, alergias, dudas e informes ordenados en una hoja A4 clara con tus originales detrás. 1.ª visita gratis, después pago único sin suscripciones." />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="SinteMed — Tus informes médicos ordenados en iPhone, iPad y Mac" />
   <meta property="og:description" content="No gastes tu consulta buscando papeles. Dedícala a hablar con tu médico. Hoja A4 con conclusiones literales y tus informes originales detrás. Tus datos nunca salen de tu dispositivo." />
@@ -24,7 +24,7 @@
         "author": { "@id": "https://icua.es/dr-fernando-gomez-sancha/#person" },
         "offers": {
           "@type": "Offer",
-          "price": "9.99",
+          "price": "0",
           "priceCurrency": "EUR"
         }
       },
@@ -494,6 +494,231 @@
       margin: 0 auto 26px;
     }
 
+    #faq { scroll-margin-top: 76px; }
+    .faq-shell {
+      max-width: 940px;
+      margin: 0 auto;
+    }
+    .faq-toolbar {
+      display: flex;
+      align-items: stretch;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .faq-search-box {
+      flex: 1 1 300px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 54px;
+      padding: 6px 10px 6px 16px;
+      border-radius: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-hi);
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+    .faq-search-box:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.18);
+    }
+    .faq-search-icon {
+      color: var(--accent);
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+    }
+    .faq-search-input {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      outline: none;
+      background: transparent;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 16.5px;
+      line-height: 1.4;
+      padding: 8px 0;
+    }
+    .faq-search-input::placeholder { color: var(--muted-soft); }
+    .faq-search-input::-webkit-search-cancel-button,
+    .faq-search-input::-webkit-search-decoration {
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .faq-clear-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 13px;
+      min-height: 38px;
+      border-radius: 11px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .faq-clear-btn:hover {
+      border-color: var(--accent);
+      background: rgba(94, 234, 212, 0.15);
+    }
+    .faq-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 54px;
+      padding: 12px 20px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 15.5px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.16s ease;
+    }
+    .faq-toggle-btn:hover {
+      border-color: var(--accent);
+      background: rgba(94, 234, 212, 0.14);
+    }
+    .faq-groups {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .faq-group-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: clamp(20px, 3vw, 28px);
+    }
+    .faq-group-head {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 16px;
+    }
+    .faq-group-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: rgba(94, 234, 212, 0.12);
+      border: 1px solid var(--border-hi);
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .faq-group-title {
+      font-size: clamp(18.5px, 2.2vw, 21px);
+      line-height: 1.3;
+      color: #e0f2fe;
+      letter-spacing: -0.01em;
+    }
+    .faq-items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.03);
+      transition: background 0.16s ease, border-color 0.16s ease;
+      scroll-margin-top: 86px;
+    }
+    .faq-item:hover { border-color: rgba(94, 234, 212, 0.28); }
+    .faq-item[open] {
+      background: var(--bg-warm);
+      border-color: var(--border-hi);
+    }
+    .faq-question {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 16px 18px;
+      min-height: 56px;
+      cursor: pointer;
+      font-size: clamp(16.5px, 1.8vw, 18px);
+      font-weight: 600;
+      line-height: 1.42;
+      color: var(--text);
+      user-select: none;
+    }
+    .faq-question::-webkit-details-marker { display: none; }
+    .faq-question:focus-visible,
+    .faq-clear-btn:focus-visible,
+    .faq-toggle-btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 13px;
+    }
+    .faq-chevron {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+    .faq-item[open] .faq-chevron {
+      transform: rotate(180deg);
+      background: rgba(94, 234, 212, 0.18);
+    }
+    .faq-answer { padding: 0 18px 18px 18px; }
+    .faq-answer p {
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.09);
+      font-size: clamp(15.5px, 1.65vw, 16.5px);
+      line-height: 1.68;
+      color: var(--muted);
+    }
+    .faq-empty {
+      text-align: center;
+      padding: 36px 22px;
+      border-radius: var(--radius);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .faq-empty p {
+      font-size: 17px;
+      color: var(--muted);
+    }
+    .faq-clear-btn[hidden],
+    .faq-toggle-btn[hidden],
+    .faq-group-card[hidden],
+    .faq-item[hidden],
+    .faq-empty[hidden] {
+      display: none !important;
+    }
+    @media (max-width: 640px) {
+      .faq-toolbar { flex-direction: column; }
+      .faq-search-box { flex: 1 1 auto; }
+      .faq-toggle-btn { width: 100%; min-height: 48px; }
+      .faq-clear-label { display: none; }
+      .faq-question { padding: 15px 15px; }
+      .faq-answer { padding: 0 15px 16px 15px; }
+    }
+
     .author-card {
       background: linear-gradient(145deg, rgba(18, 36, 56, 0.90), rgba(11, 24, 40, 0.96));
       border: 1px solid var(--border-hi);
@@ -757,7 +982,7 @@
         <div class="model-banner" id="descargar">
           <span class="story-tag" data-i18n="modelTag"></span>
           <div class="price-pills">
-            <span class="price-chip">9,99 € · $8.99 · iPhone · iPad · Mac</span>
+            <span class="price-chip">iPhone · iPad · Mac · Family Sharing</span>
           </div>
           <h3 data-i18n="modelTitle"></h3>
           <p data-i18n="modelBody"></p>
@@ -765,6 +990,36 @@
             <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.96 6.32c.67-.81 1.12-1.94 1-3.07-.96.04-2.13.64-2.82 1.45-.61.7-.15 1.85-1.01 2.96 1.08.08 2.16-.53 2.83-1.34z"/></svg>
             <span id="bottomDownloadLabel"></span>
           </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container">
+        <h2 class="section-title" id="faqTitle">Preguntas frecuentes</h2>
+        <p class="section-sub" id="faqSubtitle"></p>
+
+        <div class="faq-shell">
+          <div class="faq-toolbar">
+            <div class="faq-search-box">
+              <span class="faq-search-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              </span>
+              <input type="search" id="faqSearchInput" class="faq-search-input" autocomplete="off" spellcheck="false" />
+              <button type="button" id="faqClearBtn" class="faq-clear-btn" hidden>
+                <span aria-hidden="true">✕</span>
+                <span class="faq-clear-label" id="faqClearLabel"></span>
+              </button>
+            </div>
+            <button type="button" id="faqToggleAllBtn" class="faq-toggle-btn" aria-expanded="false"></button>
+          </div>
+
+          <div class="faq-groups" id="faqGroups"></div>
+
+          <div class="faq-empty" id="faqEmpty" role="status" aria-live="polite" hidden>
+            <p id="faqEmptyText"></p>
+            <button type="button" id="faqEmptyClearBtn" class="btn-secondary"></button>
+          </div>
         </div>
       </div>
     </section>
@@ -786,6 +1041,7 @@
   <footer>
     <div class="container">
       <span data-i18n="footerNote"></span>
+      <a href="#faq" id="footerFaqLink"></a>
       <a href="privacy.html" id="footerPrivacyLink" data-i18n="privacyLink"></a>
     </div>
   </footer>
@@ -796,6 +1052,7 @@
   </div>
 
   <script src="i18n_10lang.js"></script>
+  <script src="faq_10lang.js"></script>
   <script>
     (function () {
       // Pegar aquí la URL pública del App Store cuando Apple apruebe la versión 1.0:
@@ -973,8 +1230,325 @@
           if (dict.phoneImgAlt) phoneImg.setAttribute("alt", dict.phoneImgAlt);
         }
 
+        renderFaqLang(code);
         updateVideoSource(code);
-        try { history.replaceState(null, "", "?lang=" + code); } catch (_) {}
+        try { history.replaceState(null, "", "?lang=" + code + (window.location.hash || "")); } catch (_) {}
+      }
+
+      const faqData = window.SINTEMED_FAQ_10LANG || null;
+      const faqGroupsEl = document.getElementById("faqGroups");
+      const faqSearchInput = document.getElementById("faqSearchInput");
+      const faqClearBtn = document.getElementById("faqClearBtn");
+      const faqClearLabel = document.getElementById("faqClearLabel");
+      const faqToggleAllBtn = document.getElementById("faqToggleAllBtn");
+      const faqEmptyEl = document.getElementById("faqEmpty");
+      const faqEmptyText = document.getElementById("faqEmptyText");
+      const faqEmptyClearBtn = document.getElementById("faqEmptyClearBtn");
+      const faqTitleEl = document.getElementById("faqTitle");
+      const faqSubtitleEl = document.getElementById("faqSubtitle");
+      const footerFaqLink = document.getElementById("footerFaqLink");
+
+      let activeFaqLang = "es";
+      const faqManualOpen = new Set(["q05"]);
+      if (/^#q\d{2}$/.test(window.location.hash || "")) {
+        faqManualOpen.add(window.location.hash.slice(1));
+      }
+      const faqDomSections = [];
+
+      const FAQ_STOP_WORDS = new Set([
+        "de", "del", "al", "la", "el", "los", "las", "un", "una", "y", "o", "en", "con", "por", "para", "a",
+        "da", "do", "dos", "das", "di", "du", "des", "le", "les", "et", "ou",
+        "the", "to", "of", "in", "on", "for", "or", "and"
+      ]);
+
+      function createSvgIcon(paths) {
+        const ns = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(ns, "svg");
+        svg.setAttribute("width", "20");
+        svg.setAttribute("height", "20");
+        svg.setAttribute("viewBox", "0 0 24 24");
+        svg.setAttribute("fill", "none");
+        svg.setAttribute("stroke", "currentColor");
+        svg.setAttribute("stroke-width", "2");
+        svg.setAttribute("stroke-linecap", "round");
+        svg.setAttribute("stroke-linejoin", "round");
+        svg.setAttribute("aria-hidden", "true");
+        paths.forEach((d) => {
+          const p = document.createElementNS(ns, "path");
+          p.setAttribute("d", d);
+          svg.appendChild(p);
+        });
+        return svg;
+      }
+
+      function buildFaqCategoryIcon(iconName) {
+        const map = {
+          "lock.shield": ["M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z", "m9 12 2 2 4-4"],
+          "arrow.left.arrow.right.circle": ["M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z", "M16 10H8l3-3", "M8 14h8l-3 3"],
+          "person.2": ["M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2", "M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z", "M22 21v-2a4 4 0 0 0-3-3.87", "M16 3.13a4 4 0 0 1 0 7.75"],
+          "doc.text.magnifyingglass": ["M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h6", "M14 2v6h6", "M17.5 19.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6z", "m22 21-2.3-2.3"],
+          "qrcode.viewfinder": ["M3 7V5a2 2 0 0 1 2-2h2", "M17 3h2a2 2 0 0 1 2 2v2", "M21 17v2a2 2 0 0 1-2 2h-2", "M7 21H5a2 2 0 0 1-2-2v-2", "M7 7h4v4H7z", "M13 7h4v4h-4z", "M7 13h4v4H7z", "M13 13h4v4h-4z"],
+          "checkmark.seal": ["M12 2 15.09 5.26 19.5 4.5 19.82 8.95 23 12 19.82 15.05 19.5 19.5 15.09 18.74 12 22 8.91 18.74 4.5 19.5 4.18 15.05 1 12 4.18 8.95 4.5 4.5 8.91 5.26 12 2z", "m9 12 2 2 4-4"]
+        };
+        return createSvgIcon(map[iconName] || map["lock.shield"]);
+      }
+
+      function foldFaqText(str) {
+        return String(str || "")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase();
+      }
+
+      function matchesFaqQuery(qText, aText, rawQuery, langCode) {
+        const qf = foldFaqText(rawQuery).trim();
+        if (!qf) return true;
+        const hay = foldFaqText(qText + " " + aText);
+        if (hay.indexOf(qf) !== -1) return true;
+        const rawToks = qf.split(/[\s,.;:!?()«»"“”'’/\\-]+/).filter(Boolean);
+        if (!rawToks.length) return false;
+        const filtered = rawToks.filter((t) => !FAQ_STOP_WORDS.has(t));
+        const toks = filtered.length > 0 ? filtered : rawToks;
+        const hayWords = hay.split(/[\s,.;:!?()«»"“”'’/\\-]+/).filter(Boolean);
+        return toks.every((tok) => {
+          if (tok.length <= 2) {
+            return hayWords.indexOf(tok) !== -1;
+          }
+          if (hay.indexOf(tok) !== -1) return true;
+          if (langCode === "es" && tok === "movil" && hay.indexOf("telefono") !== -1) return true;
+          if (tok.length >= 5) {
+            const stem = tok.slice(0, tok.length - 2);
+            if (stem.length >= 3 && hayWords.some((w) => w.indexOf(stem) === 0)) return true;
+          }
+          return false;
+        });
+      }
+
+      function setFaqDetailsOpen(detailsEl, shouldOpen) {
+        if (detailsEl.open !== shouldOpen) {
+          detailsEl.dataset.progOpen = shouldOpen ? "1" : "0";
+          detailsEl.open = shouldOpen;
+          setTimeout(() => { delete detailsEl.dataset.progOpen; }, 0);
+        }
+      }
+
+      function isFaqSearching() {
+        return Boolean(faqSearchInput && foldFaqText(faqSearchInput.value).trim().length > 0);
+      }
+
+      function getFaqUi(key) {
+        if (!faqData || !faqData.ui || !faqData.ui[key]) return "";
+        return faqData.ui[key][activeFaqLang] || faqData.ui[key].es || "";
+      }
+
+      function getVisibleFaqEntries() {
+        const list = [];
+        faqDomSections.forEach((secEntry) => {
+          secEntry.items.forEach((itemEntry) => {
+            if (!itemEntry.detailsEl.hidden) list.push(itemEntry);
+          });
+        });
+        return list;
+      }
+
+      function refreshFaqToggleBtn() {
+        if (!faqToggleAllBtn) return;
+        const visible = getVisibleFaqEntries();
+        if (visible.length === 0) {
+          faqToggleAllBtn.hidden = true;
+          return;
+        }
+        faqToggleAllBtn.hidden = false;
+        const allOpen = visible.every((entry) => entry.detailsEl.open);
+        faqToggleAllBtn.textContent = allOpen ? getFaqUi("collapseAll") : getFaqUi("expandAll");
+        faqToggleAllBtn.setAttribute("aria-expanded", allOpen ? "true" : "false");
+      }
+
+      function updateFaqFilterState() {
+        if (!faqData) return;
+        const rawQuery = faqSearchInput ? faqSearchInput.value : "";
+        const hasText = rawQuery.length > 0;
+        const searching = foldFaqText(rawQuery).trim().length > 0;
+        if (faqClearBtn) faqClearBtn.hidden = !hasText;
+
+        let totalVisible = 0;
+        faqDomSections.forEach((secEntry) => {
+          let secVisible = 0;
+          secEntry.items.forEach((itemEntry) => {
+            const qStr = itemEntry.item.q[activeFaqLang] || itemEntry.item.q.es || "";
+            const aStr = itemEntry.item.a[activeFaqLang] || itemEntry.item.a.es || "";
+            const match = !searching || matchesFaqQuery(qStr, aStr, rawQuery, activeFaqLang);
+            itemEntry.detailsEl.hidden = !match;
+            if (match) {
+              secVisible += 1;
+              totalVisible += 1;
+              setFaqDetailsOpen(itemEntry.detailsEl, searching ? true : faqManualOpen.has(itemEntry.item.id));
+            }
+          });
+          secEntry.cardEl.hidden = secVisible === 0;
+        });
+
+        if (faqEmptyEl) faqEmptyEl.hidden = totalVisible > 0;
+        refreshFaqToggleBtn();
+      }
+
+      function buildFaqDomOnce() {
+        if (!faqData || !faqGroupsEl || faqDomSections.length > 0) return;
+        faqGroupsEl.textContent = "";
+        (faqData.sections || []).forEach((sec) => {
+          const card = document.createElement("div");
+          card.className = "faq-group-card";
+          card.dataset.sectionId = sec.id;
+
+          const head = document.createElement("div");
+          head.className = "faq-group-head";
+
+          const iconWrap = document.createElement("span");
+          iconWrap.className = "faq-group-icon";
+          iconWrap.appendChild(buildFaqCategoryIcon(sec.icon));
+
+          const titleEl = document.createElement("h3");
+          titleEl.className = "faq-group-title";
+
+          head.appendChild(iconWrap);
+          head.appendChild(titleEl);
+          card.appendChild(head);
+
+          const itemsWrap = document.createElement("div");
+          itemsWrap.className = "faq-items";
+
+          const itemEntries = [];
+          (sec.items || []).forEach((item) => {
+            const detailsEl = document.createElement("details");
+            detailsEl.className = "faq-item";
+            detailsEl.id = item.id;
+            if (faqManualOpen.has(item.id)) detailsEl.open = true;
+
+            const summaryEl = document.createElement("summary");
+            summaryEl.className = "faq-question";
+
+            const qSpan = document.createElement("span");
+            const chevWrap = document.createElement("span");
+            chevWrap.className = "faq-chevron";
+            chevWrap.appendChild(createSvgIcon(["m6 9 6 6 6-6"]));
+
+            summaryEl.appendChild(qSpan);
+            summaryEl.appendChild(chevWrap);
+
+            const ansWrap = document.createElement("div");
+            ansWrap.className = "faq-answer";
+            const aPara = document.createElement("p");
+            ansWrap.appendChild(aPara);
+
+            detailsEl.appendChild(summaryEl);
+            detailsEl.appendChild(ansWrap);
+
+            detailsEl.addEventListener("toggle", () => {
+              if (detailsEl.dataset.progOpen !== undefined) {
+                delete detailsEl.dataset.progOpen;
+                return;
+              }
+              if (!isFaqSearching()) {
+                if (detailsEl.open) faqManualOpen.add(item.id);
+                else faqManualOpen.delete(item.id);
+              }
+              refreshFaqToggleBtn();
+            });
+
+            itemsWrap.appendChild(detailsEl);
+            itemEntries.push({ item, detailsEl, qSpan, aPara });
+          });
+
+          card.appendChild(itemsWrap);
+          faqGroupsEl.appendChild(card);
+          faqDomSections.push({ sec, cardEl: card, titleEl, items: itemEntries });
+        });
+
+        if (faqSearchInput) {
+          faqSearchInput.addEventListener("input", updateFaqFilterState);
+          faqSearchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && faqSearchInput.value.length > 0) {
+              e.preventDefault();
+              faqSearchInput.value = "";
+              updateFaqFilterState();
+            }
+          });
+        }
+
+        function clearFaqSearch() {
+          if (!faqSearchInput) return;
+          faqSearchInput.value = "";
+          updateFaqFilterState();
+          faqSearchInput.focus();
+        }
+
+        if (faqClearBtn) faqClearBtn.addEventListener("click", clearFaqSearch);
+        if (faqEmptyClearBtn) faqEmptyClearBtn.addEventListener("click", clearFaqSearch);
+
+        if (faqToggleAllBtn) {
+          faqToggleAllBtn.addEventListener("click", () => {
+            const visible = getVisibleFaqEntries();
+            if (!visible.length) return;
+            const shouldOpen = !visible.every((entry) => entry.detailsEl.open);
+            const searching = isFaqSearching();
+            visible.forEach((entry) => {
+              if (!searching) {
+                if (shouldOpen) faqManualOpen.add(entry.item.id);
+                else faqManualOpen.delete(entry.item.id);
+              }
+              setFaqDetailsOpen(entry.detailsEl, shouldOpen);
+            });
+            refreshFaqToggleBtn();
+          });
+        }
+
+        window.addEventListener("hashchange", () => {
+          if (/^#q\d{2}$/.test(window.location.hash || "")) {
+            const targetId = window.location.hash.slice(1);
+            faqManualOpen.add(targetId);
+            if (faqSearchInput && faqSearchInput.value.length > 0) {
+              faqSearchInput.value = "";
+            }
+            updateFaqFilterState();
+          }
+        });
+      }
+
+      function renderFaqLang(code) {
+        if (!faqData) return;
+        buildFaqDomOnce();
+        activeFaqLang = faqData.ui.sheetTitle[code] ? code : "es";
+
+        const sheetTitle = getFaqUi("sheetTitle");
+        const subtitle = getFaqUi("buttonSubtitle");
+        const placeholder = getFaqUi("searchPlaceholder");
+        const clearLabel = getFaqUi("clearSearch");
+        const noResults = getFaqUi("noResults");
+
+        if (faqTitleEl) faqTitleEl.textContent = sheetTitle;
+        if (faqSubtitleEl) faqSubtitleEl.textContent = subtitle;
+        if (footerFaqLink) footerFaqLink.textContent = sheetTitle;
+        if (faqSearchInput) {
+          faqSearchInput.placeholder = placeholder;
+          faqSearchInput.setAttribute("aria-label", placeholder);
+        }
+        if (faqClearBtn) {
+          faqClearBtn.setAttribute("aria-label", clearLabel);
+          faqClearBtn.title = clearLabel;
+        }
+        if (faqClearLabel) faqClearLabel.textContent = clearLabel;
+        if (faqEmptyText) faqEmptyText.textContent = noResults;
+        if (faqEmptyClearBtn) faqEmptyClearBtn.textContent = clearLabel;
+
+        faqDomSections.forEach((secEntry) => {
+          secEntry.titleEl.textContent = secEntry.sec.title[activeFaqLang] || secEntry.sec.title.es || "";
+          secEntry.items.forEach((itemEntry) => {
+            itemEntry.qSpan.textContent = itemEntry.item.q[activeFaqLang] || itemEntry.item.q.es || "";
+            itemEntry.aPara.textContent = itemEntry.item.a[activeFaqLang] || itemEntry.item.a.es || "";
+          });
+        });
+
+        updateFaqFilterState();
       }
 
       langs.forEach((code) => {
