@@ -13,7 +13,7 @@
       --border: rgba(255, 255, 255, 0.12);
       --border-hi: rgba(94, 234, 212, 0.38);
       --text: #f1f5f9;
-      --muted: #94a3b8;
+      --muted: #cbd5e1;
       --accent: #5eead4;
       --link: #7dd3fc;
     }
@@ -21,125 +21,485 @@
     html { scroll-behavior: smooth; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
-      background:
-        radial-gradient(880px 460px at 50% -80px, rgba(30, 58, 95, 0.55), transparent 70%),
-        var(--bg);
+      background: radial-gradient(880px 460px at 50% -80px, rgba(30, 58, 95, 0.55), transparent 70%), var(--bg);
       color: var(--text);
       line-height: 1.66;
       margin: 0;
-      padding: 40px 18px 64px;
+      padding: 36px 18px 64px;
       -webkit-font-smoothing: antialiased;
     }
     .wrap {
-      max-width: 860px;
+      max-width: 880px;
       margin: 0 auto;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 22px;
-      padding: clamp(24px, 4vw, 42px);
+      padding: clamp(22px, 4vw, 42px);
     }
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 600;
-      color: var(--link);
-      text-decoration: none;
-      margin-bottom: 18px;
-    }
+    .top-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .back-link { font-weight: 600; color: var(--link); text-decoration: none; }
     .back-link:hover { text-decoration: underline; }
-    h1 { font-size: clamp(24px, 3.6vw, 32px); line-height: 1.2; margin: 0 0 8px; }
-    h2 { font-size: 20px; color: var(--link); margin: 30px 0 12px; }
-    h3 { font-size: 16px; color: var(--accent); margin: 18px 0 8px; }
+    .lang-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .lang-pill {
+      background: rgba(255,255,255,0.07); color: var(--text); border: 1px solid var(--border);
+      border-radius: 999px; padding: 5px 11px; font-size: 13px; font-weight: 600; cursor: pointer;
+    }
+    .lang-pill.active { background: #1560a8; border-color: var(--link); color: #fff; }
+    h1 { font-size: clamp(24px, 3.6vw, 32px); line-height: 1.22; margin: 0 0 8px; }
+    h2 { font-size: 20px; color: var(--link); margin: 28px 0 10px; }
     a { color: var(--link); }
     ul, ol { padding-left: 22px; }
-    li { margin-bottom: 10px; }
+    li { margin-bottom: 9px; }
     code {
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.9em;
-      background: rgba(255, 255, 255, 0.08);
-      padding: 2px 6px;
-      border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.9em;
+      background: rgba(255, 255, 255, 0.09); padding: 2px 6px; border-radius: 6px;
     }
     .verify-box {
-      margin: 28px 0;
-      padding: 24px 26px;
-      border-radius: 18px;
-      background: var(--verify-bg);
-      border: 1px solid var(--border-hi);
+      margin: 24px 0; padding: 22px 24px; border-radius: 18px;
+      background: var(--verify-bg); border: 1px solid var(--border-hi);
     }
     .verify-box h2 { margin-top: 0; color: var(--accent); }
-    .meta-line { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
-    .footer-note { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
+    .meta-line { color: var(--muted); font-size: 14px; margin-bottom: 18px; }
+    .footer-note { margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <a class="back-link" id="backLink" href="index.html">← Volver a SinteMed / Back to SinteMed</a>
-    <script>
-      (function () {
-        const l = new URLSearchParams(window.location.search).get("lang");
-        if (l) document.getElementById("backLink").href = "index.html?lang=" + encodeURIComponent(l);
-      })();
-    </script>
+    <div class="top-bar">
+      <a class="back-link" id="backLink" href="index.html">← SinteMed</a>
+      <div class="lang-pills" id="langPills" role="navigation" aria-label="Language"></div>
+    </div>
 
-    <h1>SinteMed — Política de Privacidad y Verificación Técnica</h1>
-    <p class="meta-line"><strong>Última actualización / Last updated:</strong> 2026-11-22</p>
+    <h1 id="pTitle"></h1>
+    <p class="meta-line" id="pUpdated"></p>
 
-    <h2>1. Responsable y Contacto / Data Controller &amp; Contact</h2>
-    <ul>
-      <li><strong>Responsable y titular del proyecto / Developer &amp; Controller:</strong> Dr. Fernando Gómez Sancha (proyecto personal e independiente · Madrid, España).</li>
-      <li><strong>Contacto de privacidad y soporte / Privacy &amp; Support Contact:</strong> <a href="mailto:contacto@sintemed.app">contacto@sintemed.app</a> · <a href="soporte.html">Buzón de soporte y sugerencias / Support &amp; Feedback</a> · Canal público de incidencias: <a href="https://github.com/fgomsan/sintemed-web/issues" rel="noopener">github.com/fgomsan/sintemed-web/issues</a>.</li>
-    </ul>
+    <h2 id="hController"></h2>
+    <p id="pController"></p>
 
     <section id="verificacion" class="verify-box">
-      <h2>2. Cómo comprobar tú mismo que ningún dato sale de tu dispositivo</h2>
-      <p>No te pedimos un acto de fe. Cualquier paciente, familiar o médico puede verificar por sí mismo que SinteMed trabaja exclusivamente dentro de su iPhone, iPad o Mac:</p>
-      <ol>
-        <li><strong>Prueba en Modo Avión de principio a fin:</strong> Activa el Modo Avión (desconectando Wi‑Fi y datos móviles) antes de abrir SinteMed. Podrás crear perfiles, fotografiar informes en papel, importar PDFs de laboratorio, leer el texto por OCR, extraer las conclusiones literales y generar el PDF completo para tu médico sin ningún error ni aviso de conexión, porque ningún paso consulta servidores externos.</li>
-        <li><strong>Etiqueta auditada del App Store («No se recopilan datos»):</strong> El manifiesto oficial de privacidad de Apple (<code>PrivacyInfo.xcprivacy</code>) declara <code>NSPrivacyCollectedDataTypes = []</code> y <code>NSPrivacyTracking = false</code>. La aplicación no incluye SDKs publicitarios, ni analítica de uso, ni telemetría externa.</li>
-        <li><strong>Sin cuentas, sin contraseñas en la nube y sin cliente de Internet en Mac:</strong> SinteMed no solicita correo electrónico, número de teléfono ni registro. En macOS, el ejecutable ni siquiera solicita a Apple el permiso de cliente de salida a Internet (<code>com.apple.security.network.client</code>); únicamente emplea red local cuando decides abrir el código QR presencial en la consulta.</li>
-      </ol>
-
-      <h3>How to Verify On-Device Privacy Yourself (English)</h3>
-      <ol>
-        <li><strong>Airplane Mode End-to-End Test:</strong> Turn on Airplane Mode (Wi‑Fi and cellular off) before opening SinteMed. Creating profiles, scanning paper reports, importing PDFs, running OCR, extracting verbatim conclusions, and generating your complete A4 PDF all work offline from start to finish because zero steps contact external servers.</li>
-        <li><strong>Apple App Store “Data Not Collected” Nutrition Label:</strong> SinteMed’s <code>PrivacyInfo.xcprivacy</code> manifest declares <code>NSPrivacyCollectedDataTypes = []</code> and <code>NSPrivacyTracking = false</code>, with zero third-party analytics, crash trackers, or advertising SDKs.</li>
-        <li><strong>Zero Accounts &amp; Sandboxed Network Entitlements:</strong> No sign-up, email, or cloud account exists. On macOS, the app binary does not even request outbound Internet client permission (<code>com.apple.security.network.client</code>).</li>
-      </ol>
+      <h2 id="hVerify"></h2>
+      <ol id="listVerify"></ol>
     </section>
 
-    <h2>3. Cero recopilación de datos (Política de Privacidad · Español)</h2>
-    <ul>
-      <li><strong>SinteMed</strong> no recopila, no transmite, no almacena en servidores propios ni de terceros, ni comparte ningún dato personal, identificativo, familiar o médico.</li>
-      <li>Los datos solo salen de tu dispositivo cuando tú decides voluntariamente imprimirlos en papel, compartir el archivo mediante la hoja estándar del sistema operativo o mostrar temporalmente el código QR en la red Wi‑Fi local durante la consulta.</li>
-      <li><strong>Alcance no sanitario:</strong> SinteMed es una herramienta personal de archivo y ordenación documental (fuera de la definición de producto sanitario conforme al Reglamento UE 2017/745 Art. 2.1 y guía MDCG 2019-11 § 3.2). No diagnostica, no interpreta valores analíticos ni recomienda tratamientos.</li>
-    </ul>
+    <h2 id="hCollection"></h2>
+    <ul id="listCollection"></ul>
 
-    <h2>4. Zero Data Collection (Privacy Policy · English)</h2>
-    <ul>
-      <li><strong>SinteMed</strong> collects, transmits, and stores <strong>zero</strong> personal, family, health, or usage data on any external server.</li>
-      <li>Your documents leave your device only when you explicitly print them, share them via the system share sheet, or display a temporary local Wi‑Fi QR code inside the consultation room.</li>
-      <li><strong>Non-medical device scope (EU MDR 2017/745 Art. 2(1) / MDCG 2019-11 § 3.2):</strong> SinteMed is a personal document-organization tool and never diagnoses, interprets lab values, calculates clinical risk, or provides medical advice.</li>
-    </ul>
+    <h2 id="hRetention"></h2>
+    <ul id="listRetention"></ul>
 
-    <h2>5. Arquitectura criptográfica y estándares técnicos / Technical Architecture</h2>
-    <p>Para lectores técnicos, responsables de seguridad hospitalaria e informáticos clínicos, este es el detalle de cómo se protegen los documentos en el dispositivo:</p>
-    <ul>
-      <li><strong>Bóveda cifrada en reposo:</strong> Todos los perfiles, visitas y adjuntos PDF o imagen se guardan cifrados en disco con <code>AES-256-GCM</code> (<code>Apple CryptoKit</code>) empleando una clave maestra de 256 bits custodiada en el Llavero físico de Apple con atributo <code>kSecAttrAccessibleWhenUnlockedThisDeviceOnly</code>.</li>
-      <li><strong>Procesamiento 100 % local y cero IA generativa sobre informes médicos:</strong> El reconocimiento óptico de texto (<code>Apple Vision</code>), el extractor determinista literal de apartados de conclusión (que jamás envía informes clínicos, alergias ni medicación a modelos generativos) y el motor tipográfico <code>PDFKit</code> / <code>CoreText</code> se ejecutan 100 % en local. La asistencia opcional con el modelo integrado del sistema (<code>Apple FoundationModels</code> en dispositivos compatibles) se limita exclusivamente a ordenar la redacción propia del paciente en el motivo de consulta (Paso 1) y la evolución (Paso 5), bajo verificación determinista.</li>
-      <li><strong>Copias de seguridad cifradas (<code>.mivisita</code>):</strong> Exportación e importación protegidas con contraseña elegida por el usuario mediante derivación <code>PBKDF2-HMAC-SHA256</code> (<code>310.000</code> iteraciones) y cifrado autenticado <code>AES-256-GCM</code>.</li>
-      <li><strong>Entrega opcional protegida e interoperabilidad:</strong> Posibilidad de cifrar el PDF generado con contraseña estándar <code>AES-128</code> (caracteres ASCII estándar), servidor efímero solo en memoria RAM con token aleatorio de un solo uso para el código QR en red local, y exportación estructurada compatible con el estándar internacional <strong>HL7 FHIR R4 International Patient Summary (IPS)</strong>.</li>
-      <li><strong>Compras integradas sin cuentas propias:</strong> El desbloqueo único universal (iPhone, iPad, Mac y <em>En familia</em>) se gestiona mediante <strong>Apple StoreKit 2</strong> a través del demonio del sistema (<code>storekitd</code> por XPC en macOS, sin conceder permiso de red saliente a la app) y sin recopilar datos de pago ni identificadores personales fuera de Apple.</li>
-    </ul>
+    <h2 id="hRights"></h2>
+    <ul id="listRights"></ul>
 
-    <h2>6. Conservación y borrado inmediato de datos / Data Retention &amp; Deletion</h2>
-    <ul>
-      <li><strong>Control exclusivo del usuario en su dispositivo:</strong> Todos los datos permanecen únicamente en tu dispositivo mientras tú decidas conservarlos. Puedes borrar informes individuales, consultas o perfiles completos en cualquier momento, usar la opción <em>Ajustes y Copia → Borrar todos los datos locales</em> para eliminar al instante la bóveda cifrada y su clave del Llavero, o desinstalar la aplicación.</li>
-      <li><strong>User-controlled local retention &amp; instant deletion (English):</strong> All records live solely on your device for as long as you keep them. You can delete individual reports, visits, or profiles at any time, use <em>Settings &amp; Backup → Erase all local data</em> to wipe the encrypted vault and Keychain key immediately, or uninstall the app—leaving zero copies on any server.</li>
-    </ul>
+    <h2 id="hTech"></h2>
+    <ul id="listTech"></ul>
 
-    <p class="footer-note">Dr. Fernando Gómez Sancha · Proyecto personal e independiente · <a href="mailto:contacto@sintemed.app">contacto@sintemed.app</a></p>
+    <p class="footer-note">
+      Dr. Fernando Gómez Sancha · <a href="mailto:contacto@sintemed.app">contacto@sintemed.app</a> · <a href="soporte.html" id="supportLink">Soporte / Support</a>
+    </p>
   </div>
+
+  <script>
+    const PRIVACY_I18N = {
+      es: {
+        back: "← Volver a SinteMed",
+        title: "SinteMed — Política de Privacidad y Verificación Técnica",
+        updated: "Última actualización: 22 de noviembre de 2026",
+        hController: "1. Responsable y contacto",
+        pController: "Responsable del proyecto: Dr. Fernando Gómez Sancha (proyecto personal e independiente · Madrid, España). Contacto de privacidad y soporte: contacto@sintemed.app.",
+        hVerify: "2. Cómo comprobar tú mismo el almacenamiento local cifrado",
+        verify: [
+          "Prueba en Modo Avión de principio a fin: activa el Modo Avión antes de abrir SinteMed. Podrás crear perfiles, escanear informes, ejecutar OCR, copiar apartados de conclusión (con el original siempre detrás) y generar el PDF completo sin conexión.",
+          "Etiqueta de privacidad del App Store («No se recopilan datos»): el manifiesto PrivacyInfo.xcprivacy declara NSPrivacyCollectedDataTypes = [] y NSPrivacyTracking = false, sin SDKs de terceros ni analítica.",
+          "Sin cuentas ni permiso de cliente de Internet en Mac: la aplicación no pide correo ni registro, y en macOS no solicita el permiso com.apple.security.network.client."
+        ],
+        hCollection: "3. Cero recopilación remota, canales de entrega y finalidad documental",
+        collection: [
+          "SinteMed no recopila, no transmite ni almacena datos personales, familiares ni de salud en servidores propios ni de terceros.",
+          "Tus datos se guardan cifrados solo en tu dispositivo y salen únicamente cuando tú decides compartirlos: archivo PDF (impreso o compartido), código QR por Wi‑Fi sin cifrar en la red local de la consulta (HTTP local), código QR sin red con el resumen en claro o copia al portapapeles.",
+          "Herramienta documental no sanitaria (UE MDR 2017/745 Art. 2.1 y guía MDCG 2019-11 § 3.2): no diagnostica, no interpreta análisis ni ofrece recomendaciones médicas; el apartado de conclusión copiado puede estar incompleto y el informe original viaja siempre detrás. La IA integrada del dispositivo solo ordena opcionalmente las frases escritas por el propio paciente en Motivo y Evolución y nunca toca informes médicos, alergias ni medicación. Consulta siempre a tu médico antes de tomar decisiones sobre tu salud."
+        ],
+        hRetention: "4. Conservación y borrado inmediato (incluidos archivos temporales)",
+        retention: [
+          "Plazo de conservación bajo tu control exclusivo: todos los perfiles, visitas e informes permanecen únicamente en la bóveda local cifrada de tu dispositivo mientras tú decidas conservarlos.",
+          "Borrado selectivo o total en cualquier momento: puedes eliminar un informe, una visita o un perfil individual, o pulsar «Ajustes y Copia → Borrar todos mis datos» para destruir al instante la bóveda cifrada, los adjuntos, los archivos temporales y la clave del Llavero (en iOS/iPadOS desinstalar la app también elimina su contenedor; en macOS usa primero «Borrar todos mis datos» antes de desinstalar)."
+        ],
+        hRights: "5. Derechos de protección de datos (RGPD arts. 15–22 / LOPDGDD)",
+        rights: [
+          "Al no existir servidores ni tratamiento externo por parte del desarrollador, tú ejerces directamente en tu propio dispositivo el acceso, rectificación, supresión («Borrar todos mis datos») y portabilidad (copia cifrada .mivisita y exportación estándar HL7 FHIR IPS).",
+          "Si nos escribes voluntariamente a contacto@sintemed.app, tu mensaje se usará únicamente para responder a tu consulta y se eliminará a petición tuya. Puedes ejercer tus derechos conforme a los artículos 15 a 22 del RGPD escribiendo a contacto@sintemed.app y presentar reclamación ante la Agencia Española de Protección de Datos (aepd.es) o la autoridad supervisora de tu país."
+        ],
+        hTech: "6. Arquitectura criptográfica local",
+        tech: [
+          "Bóveda local cifrada con AES-256-GCM (Apple CryptoKit) y clave maestra de 256 bits en el Llavero físico del dispositivo (kSecAttrAccessibleWhenUnlockedThisDeviceOnly, excluida de copias en la nube).",
+          "Copias .mivisita cifradas en flujo con contraseña del usuario (MVBK3: PBKDF2-HMAC-SHA256 con 600 000 iteraciones y AES-256-GCM); protección opcional del PDF con AES-128 estándar; compras integradas gestionadas por Apple StoreKit 2."
+        ]
+      },
+      en: {
+        back: "← Back to SinteMed",
+        title: "SinteMed — Privacy Policy & Technical Verification",
+        updated: "Last updated: November 22, 2026",
+        hController: "1. Controller & Contact",
+        pController: "Project owner & controller: Dr. Fernando Gómez Sancha (independent personal project · Madrid, Spain). Privacy & support contact: contacto@sintemed.app.",
+        hVerify: "2. How to Verify Encrypted On-Device Storage Yourself",
+        verify: [
+          "Airplane Mode end-to-end test: enable Airplane Mode before opening SinteMed. Creating profiles, scanning paper reports, running OCR, copying labeled conclusion sections (with originals behind), and generating your A4 PDF all work 100% offline.",
+          "App Store Privacy Nutrition Label (“Data Not Collected”): PrivacyInfo.xcprivacy declares NSPrivacyCollectedDataTypes = [] and NSPrivacyTracking = false, with zero analytics or third-party SDKs.",
+          "Zero accounts & sandboxed macOS entitlements: no sign-up or cloud account exists, and the macOS binary does not request outbound Internet client permission (com.apple.security.network.client)."
+        ],
+        hCollection: "3. Zero Remote Collection, Sharing Channels & Non-Medical Scope",
+        collection: [
+          "SinteMed collects, transmits, and stores zero personal, family, health, or usage data on any external server.",
+          "Your data is stored encrypted solely on your device and leaves only when you choose to share: as a PDF (printed or shared), via an unencrypted local Wi-Fi HTTP QR code on the clinic’s local network, via an offline cleartext summary QR code, or by copying to the clipboard.",
+          "Non-medical document organizer (EU MDR 2017/745 Art. 2(1) / MDCG 2019-11 § 3.2): does not diagnose, does not interpret lab values, and does not provide medical advice; copied conclusion sections may be incomplete and the full original report is always attached behind. Optional on-device AI formats only the patient’s own written sentences in Reason and Evolution and never touches medical reports, allergies, or medications. Always consult your physician before making health decisions."
+        ],
+        hRetention: "4. Data Retention & Instant Deletion (Including Temporary Files)",
+        retention: [
+          "Solely user-controlled retention: all profiles, visits, and reports remain exclusively inside your device’s encrypted vault for as long as you choose to keep them.",
+          "Selective or complete erasure anytime: delete individual reports, visits, or profiles, or use “Settings & Backup → Erase all my data” to wipe the encrypted vault, attachments, temporary files, and Keychain key immediately (on iOS/iPadOS uninstalling removes the app container; on macOS run “Erase all my data” before removing the app)."
+        ],
+        hRights: "5. Your Data Protection Rights (GDPR Arts. 15–22)",
+        rights: [
+          "Because the developer never receives or stores your app data on any server, you exercise access, rectification, erasure (“Erase all my data”), and portability (encrypted .mivisita archive and HL7 FHIR IPS export) directly on your device.",
+          "If you contact us by email at contacto@sintemed.app, your message is used solely to reply to your inquiry and erased upon request. You may exercise your GDPR rights (Arts. 15–22) by writing to contacto@sintemed.app and have the right to lodge a complaint with the Spanish Data Protection Agency (aepd.es) or your national supervisory authority."
+        ],
+        hTech: "6. Local Cryptographic Architecture",
+        tech: [
+          "Encrypted at rest with AES-256-GCM (Apple CryptoKit) using a 256-bit master key in the local Apple Keychain (kSecAttrAccessibleWhenUnlockedThisDeviceOnly, excluded from cloud backups).",
+          "Streamed password-encrypted .mivisita backups (MVBK3: 600,000 PBKDF2-HMAC-SHA256 iterations + AES-256-GCM), optional AES-128 PDF password protection, and Apple StoreKit 2 purchases."
+        ]
+      },
+      fr: {
+        back: "← Retour à SinteMed",
+        title: "SinteMed — Politique de confidentialité et vérification technique",
+        updated: "Dernière mise à jour : 22 novembre 2026",
+        hController: "1. Responsable et contact",
+        pController: "Responsable du projet : Dr Fernando Gómez Sancha (projet personnel indépendant · Madrid, Espagne). Contact confidentialité et assistance : contacto@sintemed.app.",
+        hVerify: "2. Comment vérifier le stockage local chiffré sur votre appareil",
+        verify: [
+          "Test complet en Mode Avion : créez des profils, numérisez des comptes rendus, lancez l’OCR, copiez les rubriques de conclusion (avec l’original derrière) et générez le PDF A4 entièrement hors ligne.",
+          "Étiquette de confidentialité App Store (« Aucune donnée collectée ») : PrivacyInfo.xcprivacy déclare NSPrivacyCollectedDataTypes = [] et NSPrivacyTracking = false, sans SDK tiers.",
+          "Sans compte ni client Internet sortant sur Mac : aucune inscription requise et absence de l’autorisation com.apple.security.network.client sur macOS."
+        ],
+        hCollection: "3. Zéro collecte distante, voies de partage et finalité documentaire",
+        collection: [
+          "SinteMed ne collecte, ne transmet ni ne stocke aucune donnée personnelle ou médicale sur un serveur externe.",
+          "Vos données sont stockées chiffrées uniquement sur votre appareil et n’en sortent que lorsque vous choisissez de partager : fichier PDF (imprimé ou partagé), code QR Wi‑Fi non chiffré sur le réseau local du cabinet (HTTP local), code QR hors ligne contenant le résumé en clair ou copie dans le presse-papiers.",
+          "Outil personnel d’organisation documentaire, hors dispositif médical (Règlement UE 2017/745 art. 2.1 et MDCG 2019-11 § 3.2) : ne pose aucun diagnostic, n’interprète pas les analyses de laboratoire et ne fournit aucun conseil médical ; la rubrique de conclusion copiée peut être incomplète et l’original complet suit toujours derrière. L’IA locale de l’appareil ne met en forme que les phrases rédigées par le patient (Motif et Évolution) et ne touche jamais aux comptes rendus, allergies ou traitements. Consultez toujours votre médecin avant toute décision de santé."
+        ],
+        hRetention: "4. Conservation et suppression immédiate (fichiers temporaires inclus)",
+        retention: [
+          "Conservation sous votre seul contrôle : vos données restent uniquement dans le coffre chiffré local de votre appareil tant que vous décidez de les conserver.",
+          "Suppression sélective ou totale : supprimez un document, une visite ou un profil, ou utilisez « Réglages et sauvegarde → Effacer toutes mes données » pour détruire immédiatement le coffre chiffré, les pièces jointes, les fichiers temporaires et la clé du Trousseau (sur macOS, exécutez « Effacer toutes mes données » avant de désinstaller l’application)."
+        ],
+        hRights: "5. Vos droits (RGPD art. 15–22)",
+        rights: [
+          "Aucun serveur externe n’étant utilisé, vous exercez directement sur votre appareil vos droits d’accès, de rectification, d’effacement (« Effacer toutes mes données ») et de portabilité (sauvegarde chiffrée .mivisita et export HL7 FHIR IPS).",
+          "Si vous nous écrivez à contacto@sintemed.app, votre message sert uniquement à vous répondre et est effacé sur simple demande. Vous pouvez exercer vos droits RGPD (art. 15 à 22) en écrivant à contacto@sintemed.app et introduire une réclamation auprès de l’AEPD (aepd.es) ou de la CNIL / autorité de contrôle compétente."
+        ],
+        hTech: "6. Architecture cryptographique locale",
+        tech: [
+          "Chiffrement local AES-256-GCM (Apple CryptoKit) avec clé de 256 bits dans le Trousseau local (kSecAttrAccessibleWhenUnlockedThisDeviceOnly, exclue d’iCloud).",
+          "Sauvegardes .mivisita chiffrées par mot de passe (MVBK3 : PBKDF2-HMAC-SHA256 à 600 000 itérations + AES-256-GCM), protection PDF AES-128 facultative et achats via Apple StoreKit 2."
+        ]
+      },
+      de: {
+        back: "← Zurück zu SinteMed",
+        title: "SinteMed — Datenschutzerklärung & Technische Überprüfung",
+        updated: "Stand: 22. November 2026",
+        hController: "1. Verantwortlicher und Kontakt",
+        pController: "Projektverantwortlicher: Dr. Fernando Gómez Sancha (unabhängiges persönliches Projekt · Madrid, Spanien). Datenschutz- und Supportkontakt: contacto@sintemed.app.",
+        hVerify: "2. So prüfen Sie die lokale Verschlüsselung auf Ihrem Gerät selbst",
+        verify: [
+          "Flugmodus-Test von Anfang bis Ende: Profile anlegen, Befunde scannen, OCR ausführen, Schlussfolgerungsabschnitte übernehmen (mit Original dahinter) und das A4-PDF erzeugen funktioniert vollständig offline.",
+          "App-Store-Datenschutzkennzeichnung („Keine Daten erfasst“): PrivacyInfo.xcprivacy deklariert NSPrivacyCollectedDataTypes = [] und NSPrivacyTracking = false, ohne Drittanbieter-SDKs.",
+          "Kein Benutzerkonto und keine ausgehende Internetberechtigung auf dem Mac (kein com.apple.security.network.client)."
+        ],
+        hCollection: "3. Keine Datenerhebung, Weitergabewege & dokumentarischer Zweck",
+        collection: [
+          "SinteMed erhebt, überträgt und speichert keinerlei personenbezogene oder medizinische Daten auf externen Servern.",
+          "Ihre Daten werden ausschließlich verschlüsselt auf Ihrem Gerät gespeichert und verlassen es nur, wenn Sie selbst teilen: als PDF (ausgedruckt oder geteilt), per unverschlüsseltem WLAN-QR-Code im lokalen Praxisnetz (lokales HTTP), per Offline-QR-Code mit Klartext-Zusammenfassung oder über die Zwischenablage.",
+          "Persönliches Dokumentationswerkzeug, kein Medizinprodukt (EU-MDR 2017/745 Art. 2 Abs. 1 / MDCG 2019-11 § 3.2): Die App stellt keine Diagnosen, interpretiert keine Laborwerte und erteilt keinen medizinischen Rat; übernommene Schlussfolgerungen können unvollständig sein, das Original folgt stets dahinter. Die optionale Geräte-KI ordnet ausschließlich eigene Sätze zu Anlass und Verlauf und verarbeitet niemals Arztbriefe, Allergien oder Medikamente. Wenden Sie sich vor gesundheitlichen Entscheidungen stets an Ihre Ärztin oder Ihren Arzt."
+        ],
+        hRetention: "4. Speicherdauer und sofortige Löschung (inkl. temporäre Dateien)",
+        retention: [
+          "Speicherung allein unter Ihrer Kontrolle: Alle Daten verbleiben ausschließlich verschlüsselt auf Ihrem Gerät, solange Sie sie aufbewahren.",
+          "Jederzeitige Löschung: Einzelne Befunde, Termine oder Profile löschen oder über „Einstellungen & Sicherung → Alle meine Daten löschen“ den verschlüsselten Tresor, Anhänge, temporäre Dateien und den Schlüsselbund-Schlüssel sofort vernichten (unter macOS bitte vor dem Entfernen der App „Alle meine Daten löschen“ ausführen)."
+        ],
+        hRights: "5. Ihre Datenschutzrechte (DSGVO Art. 15–22)",
+        rights: [
+          "Da der Entwickler keine App-Daten erhält, üben Sie Auskunft, Berichtigung, Löschung („Alle meine Daten löschen“) und Datenübertragbarkeit (.mivisita-Sicherung sowie HL7-FHIR-IPS-Export) unmittelbar auf Ihrem eigenen Gerät aus.",
+          "Bei freiwilliger Kontaktaufnahme unter contacto@sintemed.app wird Ihre Nachricht nur zur Beantwortung genutzt und auf Wunsch gelöscht. Sie können Ihre DSGVO-Rechte (Art. 15–22) per E-Mail an contacto@sintemed.app geltend machen und haben ein Beschwerderecht bei der AEPD (aepd.es) oder Ihrer zuständigen Datenschutzaufsichtsbehörde."
+        ],
+        hTech: "6. Lokale Verschlüsselungsarchitektur",
+        tech: [
+          "Lokale AES-256-GCM-Verschlüsselung (Apple CryptoKit) mit 256-Bit-Schlüssel im lokalen Schlüsselbund (kSecAttrAccessibleWhenUnlockedThisDeviceOnly, ohne Cloud-Backup).",
+          "Passwortgeschützte .mivisita-Sicherungen (MVBK3: PBKDF2-HMAC-SHA256 mit 600.000 Iterationen + AES-256-GCM), optionaler AES-128-PDF-Schutz und In-App-Käufe über Apple StoreKit 2."
+        ]
+      },
+      it: {
+        back: "← Torna a SinteMed",
+        title: "SinteMed — Informativa sulla Privacy e Verifica Tecnica",
+        updated: "Ultimo aggiornamento: 22 novembre 2026",
+        hController: "1. Titolare e contatti",
+        pController: "Titolare del progetto: Dott. Fernando Gómez Sancha (progetto personale indipendente · Madrid, Spagna). Contatto privacy e supporto: contacto@sintemed.app.",
+        hVerify: "2. Come verificare di persona l’archiviazione locale cifrata",
+        verify: [
+          "Prova in Modalità Aereo dall’inizio alla fine: creazione profili, scansione referti, OCR, copia delle sezioni di conclusione (con l’originale dietro) e generazione del PDF A4 funzionano interamente offline.",
+          "Etichetta sulla privacy dell’App Store («Dati non raccolti»): PrivacyInfo.xcprivacy dichiara NSPrivacyCollectedDataTypes = [] e NSPrivacyTracking = false, senza SDK di terze parti.",
+          "Nessun account e nessun permesso di rete in uscita su Mac (assenza di com.apple.security.network.client)."
+        ],
+        hCollection: "3. Zero raccolta remota, canali di condivisione e finalità documentale",
+        collection: [
+          "SinteMed non raccoglie, non trasmette e non conserva dati personali o sanitari su server esterni.",
+          "I tuoi dati sono conservati cifrati solo sul tuo dispositivo ed escono esclusivamente quando decidi di condividere: file PDF (stampato o condiviso), codice QR Wi‑Fi non cifrato sulla rete locale dello studio (HTTP locale), codice QR offline con il riepilogo in chiaro o copia negli appunti.",
+          "Strumento personale di organizzazione documentale, non dispositivo medico (Reg. UE 2017/745 art. 2.1 / MDCG 2019-11 § 3.2): non formula diagnosi, non interpreta analisi di laboratorio e non fornisce consigli medici; la conclusione copiata può essere incompleta e l’originale completo è sempre allegato dietro. L’IA locale ordina opzionalmente solo le frasi scritte da te su motivo ed evoluzione e non tocca mai referti, allergie o farmaci. Consulta sempre il tuo medico prima di prendere decisioni sulla salute."
+        ],
+        hRetention: "4. Conservazione e cancellazione immediata (inclusi i file temporanei)",
+        retention: [
+          "Conservazione sotto il tuo esclusivo controllo: i dati restano solo nella cassaforte cifrata del tuo dispositivo finché decidi di mantenerli.",
+          "Cancellazione immediata: puoi eliminare singoli referti, visite o profili, oppure usare «Impostazioni e backup → Cancella tutti i miei dati» per distruggere subito cassaforte cifrata, allegati, file temporanei e chiave del Portachiavi (su macOS esegui «Cancella tutti i miei dati» prima di disinstallare l’app)."
+        ],
+        hRights: "5. Diritti dell’interessato (GDPR artt. 15–22)",
+        rights: [
+          "Non esistendo server esterni, eserciti direttamente sul tuo dispositivo accesso, rettifica, cancellazione («Cancella tutti i miei dati») e portabilità (copia cifrata .mivisita ed esportazione HL7 FHIR IPS).",
+          "Se scrivi a contacto@sintemed.app, il messaggio viene usato solo per risponderti e cancellato su richiesta. Puoi esercitare i tuoi diritti GDPR (artt. 15–22) scrivendo a contacto@sintemed.app e proporre reclamo all’AEPD (aepd.es) o al Garante per la protezione dei dati personali."
+        ],
+        hTech: "6. Architettura crittografica locale",
+        tech: [
+          "Cifratura locale AES-256-GCM (Apple CryptoKit) con chiave a 256 bit nel Portachiavi locale (kSecAttrAccessibleWhenUnlockedThisDeviceOnly, esclusa dal cloud).",
+          "Copie .mivisita cifrate con password (MVBK3: PBKDF2-HMAC-SHA256 a 600.000 iterazioni + AES-256-GCM), password PDF AES-128 opzionale e acquisti tramite Apple StoreKit 2."
+        ]
+      },
+      pt: {
+        back: "← Voltar à SinteMed",
+        title: "SinteMed — Política de Privacidade e Verificação Técnica",
+        updated: "Última atualização: 22 de novembro de 2026",
+        hController: "1. Responsável e contacto",
+        pController: "Responsável pelo projeto: Dr. Fernando Gómez Sancha (projeto pessoal independente · Madrid, Espanha). Contacto de privacidade e suporte: contacto@sintemed.app.",
+        hVerify: "2. Como comprovar o armazenamento local cifrado no seu dispositivo",
+        verify: [
+          "Teste completo em Modo de Avião: criar perfis, digitalizar relatórios, executar OCR, copiar secções de conclusão (com o original atrás) e gerar o PDF A4 funciona 100 % offline.",
+          "Etiqueta de privacidade da App Store («Dados não recolhidos»): PrivacyInfo.xcprivacy declara NSPrivacyCollectedDataTypes = [] e NSPrivacyTracking = false, sem SDKs de terceiros.",
+          "Sem contas nem permissão de cliente de Internet no Mac (sem com.apple.security.network.client)."
+        ],
+        hCollection: "3. Zero recolha remota, canais de partilha e finalidade documental",
+        collection: [
+          "A SinteMed não recolhe, não transmite nem armazena dados pessoais ou de saúde em servidores externos.",
+          "Os dados ficam guardados cifrados apenas no seu dispositivo e só saem quando decide partilhá-los: ficheiro PDF (impresso ou partilhado), código QR por Wi‑Fi não cifrado na rede local do consultório (HTTP local), código QR offline com o resumo em texto simples ou cópia para a área de transferência.",
+          "Ferramenta pessoal de organização documental, não dispositivo médico (Reg. UE 2017/745 art. 2.º, n.º 1 / MDCG 2019-11 § 3.2): não diagnostica, não interpreta análises laboratoriais nem dá aconselhamento médico; a secção de conclusão copiada pode estar incompleta e o original completo segue sempre atrás. A IA local organiza apenas opcionalmente frases escritas pelo próprio doente em Motivo e Evolução, nunca tocando em relatórios, alergias ou medicação. Consulte sempre o seu médico antes de tomar decisões de saúde."
+        ],
+        hRetention: "4. Conservação e eliminação imediata (incluindo ficheiros temporários)",
+        retention: [
+          "Conservação sob o seu controlo exclusivo: todos os dados permanecem apenas no cofre cifrado local do seu dispositivo enquanto decidir mantê-los.",
+          "Eliminação a qualquer momento: elimine relatórios, consultas ou perfis individuais, ou utilize «Definições e Cópia → Apagar todos os meus dados» para destruir de imediato o cofre cifrado, anexos, ficheiros temporários e a chave do Porta-chaves (no macOS execute «Apagar todos os meus dados» antes de desinstalar a aplicação)."
+        ],
+        hRights: "5. Direitos de proteção de dados (RGPD arts. 15.º–22.º)",
+        rights: [
+          "Sem servidores externos, exerce diretamente no seu dispositivo o acesso, retificação, apagamento («Apagar todos os meus dados») e portabilidade (cópia cifrada .mivisita e exportação HL7 FHIR IPS).",
+          "Caso nos contacte em contacto@sintemed.app, a mensagem será usada apenas para responder e eliminada a seu pedido. Pode exercer os seus direitos RGPD (arts. 15.º–22.º) escrevendo para contacto@sintemed.app e apresentar reclamação junto da AEPD (aepd.es) ou da CNPD."
+        ],
+        hTech: "6. Arquitetura criptográfica local",
+        tech: [
+          "Cofre local cifrado com AES-256-GCM (Apple CryptoKit) e chave de 256 bits no Porta-chaves local (kSecAttrAccessibleWhenUnlockedThisDeviceOnly, excluído da nuvem).",
+          "Cópias .mivisita protegidas por palavra-passe (MVBK3: PBKDF2-HMAC-SHA256 com 600 000 iterações + AES-256-GCM), palavra-passe PDF AES-128 opcional e compras via Apple StoreKit 2."
+        ]
+      },
+      bg: {
+        back: "← Назад към SinteMed",
+        title: "SinteMed — Политика за поверителност и техническа проверка",
+        updated: "Последна актуализация: 22 ноември 2026 г.",
+        hController: "1. Администратор и връзка",
+        pController: "Ръководител на проекта: д-р Фернандо Гомес Санча (независим личен проект · Мадрид, Испания). Контакт за поверителност и поддръжка: contacto@sintemed.app.",
+        hVerify: "2. Как сами да проверите локалното криптирано съхранение",
+        verify: [
+          "Пълен тест в Самолетен режим: създаване на профили, сканиране на документи, OCR, копиране на раздели със заключение (с оригинала отзад) и генериране на A4 PDF работят изцяло офлайн.",
+          "Етикет за поверителност в App Store („Не се събират данни“): PrivacyInfo.xcprivacy декларира NSPrivacyCollectedDataTypes = [] и NSPrivacyTracking = false, без външни SDK.",
+          "Без акаунти и без разрешение за изходящ интернет на Mac (липсва com.apple.security.network.client)."
+        ],
+        hCollection: "3. Нулево събиране на данни, начини на споделяне и документално предназначение",
+        collection: [
+          "SinteMed не събира, не предава и не съхранява лични или медицински данни на външни сървъри.",
+          "Данните Ви се съхраняват криптирани само на устройството Ви и го напускат единствено когато лично изберете да ги споделите: PDF файл (разпечатан или споделен), некриптиран Wi‑Fi QR код в локалната мрежа на кабинета (локален HTTP), офлайн QR код с резюмето в открит текст или копиране в клипборда.",
+          "Личен инструмент за подреждане на документи, не е медицинско изделие (Регламент ЕС 2017/745 чл. 2, пар. 1 и MDCG 2019-11 § 3.2): не поставя диагнози, не тълкува лабораторни изследвания и не дава медицински съвети; копираният раздел със заключение може да е непълен, а оригиналът винаги е приложен отзад. Локалният ИИ подрежда по избор само написаните от пациента изречения за повод и развитие и никога не обработва изследвания, алергии или лекарства. Винаги се консултирайте с Вашия лекар преди здравни решения."
+        ],
+        hRetention: "4. Съхранение и незабавно изтриване (включително временните файлове)",
+        retention: [
+          "Съхранение изцяло под Ваш контрол: всички данни остават единствено в локалния криптиран трезор на устройството Ви, докато решите да ги пазите.",
+          "Незабавно изтриване по всяко време: изтрийте отделни документи, прегледи или профили, или използвайте „Настройки и архив → Изтриване на всички мои данни“ за незабавно унищожаване на криптирания трезор, прикачените документи, временните файлове и ключа в Keychain (на macOS изпълнете „Изтриване на всички мои данни“ преди деинсталиране)."
+        ],
+        hRights: "5. Права за защита на данните (ОРЗД чл. 15–22)",
+        rights: [
+          "Тъй като няма външни сървъри, упражнявате директно на устройството си правата на достъп, коригиране, изтриване („Изтриване на всички мои данни“) и преносимост (.mivisita архив и HL7 FHIR IPS експорт).",
+          "Ако ни пишете на contacto@sintemed.app, съобщението Ви се използва само за отговор и се изтрива при поискване. Можете да упражните правата си по ОРЗД (чл. 15–22) чрез имейл до contacto@sintemed.app и имате право на жалба пред AEPD (aepd.es) или КЗЛД."
+        ],
+        hTech: "6. Локална криптографска архитектура",
+        tech: [
+          "Локално криптиране AES-256-GCM (Apple CryptoKit) с 256-битов ключ в локалния Keychain (kSecAttrAccessibleWhenUnlockedThisDeviceOnly, изключен от облачни копия).",
+          "Защитени с парола .mivisita архиви (MVBK3: PBKDF2-HMAC-SHA256 с 600 000 итерации + AES-256-GCM), незадължителна AES-128 парола за PDF и покупки чрез Apple StoreKit 2."
+        ]
+      },
+      ru: {
+        back: "← Назад к SinteMed",
+        title: "SinteMed — Политика конфиденциальности и техническая проверка",
+        updated: "Последнее обновление: 22 ноября 2026 г.",
+        hController: "1. Ответственное лицо и контакты",
+        pController: "Автор и владелец проекта: д-р Фернандо Гомес Санча (независимый личный проект · Мадрид, Испания). Контакт по вопросам конфиденциальности и поддержки: contacto@sintemed.app.",
+        hVerify: "2. Как самостоятельно проверить локальное зашифрованное хранение",
+        verify: [
+          "Проверка в Авиарежиме от начала до конца: создание профилей, сканирование заключений, OCR, копирование разделов заключения (с оригиналом следом) и создание PDF A4 полностью работают без интернета.",
+          "Метка конфиденциальности App Store («Данные не собираются»): PrivacyInfo.xcprivacy содержит NSPrivacyCollectedDataTypes = [] и NSPrivacyTracking = false, без сторонней аналитики и SDK.",
+          "Без учётных записей и без разрешения на исходящий интернет на Mac (нет com.apple.security.network.client)."
+        ],
+        hCollection: "3. Нулевой сбор данных, способы передачи и документальное назначение",
+        collection: [
+          "SinteMed не собирает, не передаёт и не хранит персональные или медицинские данные на внешних серверах.",
+          "Данные хранятся зашифрованными только на вашем устройстве и покидают его лишь тогда, когда вы сами решаете поделиться: файл PDF (печать или отправка), незашифрованный Wi‑Fi QR-код в локальной сети кабинета (локальный HTTP), офлайн-QR со сводкой в открытом тексте или копирование в буфер обмена.",
+          "Личный инструмент систематизации документов, не медицинское изделие (Регламент ЕС 2017/745 ст. 2(1) / MDCG 2019-11 § 3.2): приложение не ставит диагнозов, не интерпретирует анализы и не даёт медицинских рекомендаций; скопированный раздел заключения может быть неполным, а полный оригинал всегда приложен следом. Встроенный ИИ устройства по желанию упорядочивает только собственные фразы пациента о причине визита и динамике и никогда не обрабатывает медицинские отчёты, аллергии или лекарства. Всегда консультируйтесь с врачом перед принятием медицинских решений."
+        ],
+        hRetention: "4. Хранение и мгновенное удаление данных (включая временные файлы)",
+        retention: [
+          "Хранение полностью под вашим контролем: все данные находятся исключительно в зашифрованном локальном хранилище вашего устройства, пока вы сами их храните.",
+          "Мгновенное удаление в любой момент: удаляйте отдельные документы, визиты или профили либо нажмите «Настройки и копия → Удалить все мои данные» для немедленного уничтожения зашифрованного хранилища, вложений, временные файлы также удаляются вместе с ключом Связки ключей (на macOS выполните «Удалить все мои данные» перед удалением приложения)."
+        ],
+        hRights: "5. Права субъекта данных (GDPR ст. 15–22)",
+        rights: [
+          "Так как внешние серверы не используются, доступ, исправление, удаление («Удалить все мои данные») и переносимость данных (архив .mivisita и экспорт HL7 FHIR IPS) осуществляются вами непосредственно на устройстве.",
+          "При обращении на contacto@sintemed.app письмо используется только для ответа и удаляется по вашему запросу. Вы можете реализовать права по GDPR (ст. 15–22), написав на contacto@sintemed.app, а также подать жалобу в Испанское агентство по защите данных (aepd.es) или надзорный орган вашей страны."
+        ],
+        hTech: "6. Локальная криптографическая архитектура",
+        tech: [
+          "Шифрование хранилища AES-256-GCM (Apple CryptoKit) с 256-битным ключом в локальной Связке ключей Apple (kSecAttrAccessibleWhenUnlockedThisDeviceOnly, без облачного копирования).",
+          "Потоковые резервные копии .mivisita под паролем (MVBK3: PBKDF2-HMAC-SHA256 с 600 000 итераций + AES-256-GCM), опциональная защита PDF паролем AES-128 и покупки через Apple StoreKit 2."
+        ]
+      },
+      ro: {
+        back: "← Înapoi la SinteMed",
+        title: "SinteMed — Politica de confidențialitate și verificare tehnică",
+        updated: "Ultima actualizare: 22 noiembrie 2026",
+        hController: "1. Operator și contact",
+        pController: "Titularul proiectului: Dr. Fernando Gómez Sancha (proiect personal independent · Madrid, Spania). Contact confidențialitate și asistență: contacto@sintemed.app.",
+        hVerify: "2. Cum puteți verifica personal stocarea locală criptată",
+        verify: [
+          "Test complet în Modul Avion: crearea profilurilor, scanarea documentelor, OCR, copierea secțiunilor de concluzie (cu originalul atașat) și generarea PDF-ului A4 funcționează integral offline.",
+          "Eticheta de confidențialitate App Store („Nu se colectează date”): PrivacyInfo.xcprivacy declară NSPrivacyCollectedDataTypes = [] și NSPrivacyTracking = false, fără SDK-uri terțe.",
+          "Fără conturi și fără permisiune de internet de ieșire pe Mac (fără com.apple.security.network.client)."
+        ],
+        hCollection: "3. Zero colectare la distanță, canale de partajare și scop documentar",
+        collection: [
+          "SinteMed nu colectează, nu transmite și nu stochează date personale sau medicale pe servere externe.",
+          "Datele dvs. sunt păstrate criptate exclusiv pe dispozitivul dvs. și îl părăsesc doar când decideți voluntar să partajați: fișier PDF (tipărit sau partajat), cod QR Wi‑Fi necriptat în rețeaua locală a cabinetului (HTTP local), cod QR offline cu rezumatul în clar sau copiere în clipboard.",
+          "Instrument personal de organizare a documentelor, nu dispozitiv medical (Reg. UE 2017/745 art. 2(1) / MDCG 2019-11 § 3.2): nu pune diagnostice, nu interpretează analizele de laborator și nu oferă recomandări medicale; secțiunea de concluzie copiată poate fi incompletă, iar originalul complet este atașat mereu în continuare. IA locală a dispozitivului ordonează opțional doar frazele scrise de pacient la Motiv și Evoluție și nu atinge niciodată rapoartele medicale, alergiile sau medicația. Consultați întotdeauna medicul înainte de a lua decizii privind sănătatea."
+        ],
+        hRetention: "4. Păstrarea și ștergerea imediată a datelor (inclusiv fișierele temporare)",
+        retention: [
+          "Păstrare exclusiv sub controlul dvs.: toate datele rămân doar în seiful criptat local al dispozitivului dvs. atât timp cât alegeți să le păstrați.",
+          "Ștergere imediată oricând: puteți șterge rapoarte, consultații sau profiluri individuale ori puteți folosi „Setări și copie → Ștergeți toate datele mele” pentru a distruge imediat seiful criptat, atașamentele, fișierele temporare și cheia din Portchei (pe macOS folosiți „Ștergeți toate datele mele” înainte de dezinstalare)."
+        ],
+        hRights: "5. Drepturile dvs. privind protecția datelor (RGPD art. 15–22)",
+        rights: [
+          "Fără servere externe, exercitați direct pe dispozitivul dvs. accesul, rectificarea, ștergerea („Ștergeți toate datele mele”) și portabilitatea (arhivă criptată .mivisita și export HL7 FHIR IPS).",
+          "Dacă ne scrieți la contacto@sintemed.app, mesajul este utilizat exclusiv pentru răspuns și șters la cerere. Vă puteți exercita drepturile RGPD (art. 15–22) scriind la contacto@sintemed.app și aveți dreptul de a depune o plângere la AEPD (aepd.es) sau la ANSPDCP."
+        ],
+        hTech: "6. Arhitectură criptografică locală",
+        tech: [
+          "Criptare locală AES-256-GCM (Apple CryptoKit) cu cheie de 256 biți în Portcheiul local (kSecAttrAccessibleWhenUnlockedThisDeviceOnly, exclusă din cloud).",
+          "Copii .mivisita protejate prin parolă (MVBK3: PBKDF2-HMAC-SHA256 cu 600.000 de iterații + AES-256-GCM), parolă PDF AES-128 opțională și achiziții prin Apple StoreKit 2."
+        ]
+      },
+      uk: {
+        back: "← Назад до SinteMed",
+        title: "SinteMed — Політика конфіденційності та технічна перевірка",
+        updated: "Останнє оновлення: 22 листопада 2026 р.",
+        hController: "1. Відповідальна особа та контакти",
+        pController: "Автор і власник проєкту: д-р Фернандо Гомес Санча (незалежний особистий проєкт · Мадрид, Іспанія). Контакт з питань конфіденційності та підтримки: contacto@sintemed.app.",
+        hVerify: "2. Як самостійно перевірити локальне зашифроване зберігання",
+        verify: [
+          "Повна перевірка в Режимі польоту: створення профілів, сканування документів, OCR, копіювання розділів висновку (з оригіналом слідом) і формування PDF A4 працюють повністю офлайн.",
+          "Мітка конфіденційності App Store («Дані не збираються»): PrivacyInfo.xcprivacy декларує NSPrivacyCollectedDataTypes = [] і NSPrivacyTracking = false, без сторонніх SDK.",
+          "Без облікових записів і без дозволу на вихідний інтернет на Mac (немає com.apple.security.network.client)."
+        ],
+        hCollection: "3. Нульовий збір даних, канали поширення та документальне призначення",
+        collection: [
+          "SinteMed не збирає, не передає та не зберігає персональні чи медичні дані на зовнішніх серверах.",
+          "Ваші дані зберігаються зашифрованими лише на вашому пристрої та залишають його тільки тоді, коли ви самі вирішуєте поділитися: файл PDF (роздрукований або надісланий), незашифрований Wi‑Fi QR-код у локальній мережі кабінету (локальний HTTP), офлайн-QR зі зведенням у відкритому тексті або копіювання в буфер обміну.",
+          "Особистий інструмент упорядкування документів, не медичний виріб (Регламент ЄС 2017/745 ст. 2(1) / MDCG 2019-11 § 3.2): не встановлює діагнозів, не інтерпретує аналізи та не надає медичних порад; скопійований розділ висновку може бути неповним, а повний оригінал завжди додається слідом. Локальний ШІ пристрою за бажанням впорядковує лише власні фрази пацієнта щодо причини візиту та динаміки й ніколи не торкається медичних висновків, алергій чи ліків. Завжди консультуйтеся з лікарем перед прийняттям рішень щодо здоров’я."
+        ],
+        hRetention: "4. Зберігання та миттєве видалення даних (включно з тимчасовими файлами)",
+        retention: [
+          "Зберігання виключно під вашим контролем: усі дані залишаються лише в зашифрованому локальному сховищі вашого пристрою, доки ви їх зберігаєте.",
+          "Миттєве видалення будь-коли: видаляйте окремі документи, візити чи профілі або скористайтеся пунктом «Налаштування та копія → Видалити всі мої дані», щоб негайно знищити зашифроване сховище, вкладення, тимчасові файли та ключ В’язки ключів (на macOS виконайте «Видалити всі мої дані» перед видаленням застосунку)."
+        ],
+        hRights: "5. Ваші права на захист даних (GDPR ст. 15–22)",
+        rights: [
+          "Оскільки зовнішніх серверів немає, ви безпосередньо на своєму пристрої реалізуєте право на доступ, виправлення, видалення («Видалити всі мої дані») та перенесення даних (архів .mivisita й експорт HL7 FHIR IPS).",
+          "Якщо ви напишете на contacto@sintemed.app, повідомлення буде використано лише для відповіді та видалено за вашим запитом. Ви можете реалізувати свої права за GDPR (ст. 15–22), написавши на contacto@sintemed.app, і маєте право подати скаргу до Іспанського агентства із захисту даних (aepd.es) або наглядового органу вашої країни."
+        ],
+        hTech: "6. Локальна криптографічна архітектура",
+        tech: [
+          "Локальне шифрування AES-256-GCM (Apple CryptoKit) із 256-бітним ключем у локальній В’язці ключів (kSecAttrAccessibleWhenUnlockedThisDeviceOnly, без хмарних копій).",
+          "Потокові захищені паролем копії .mivisita (MVBK3: PBKDF2-HMAC-SHA256 із 600 000 ітерацій + AES-256-GCM), опційний захист PDF паролем AES-128 та покупки через Apple StoreKit 2."
+        ]
+      }
+    };
+
+    (function () {
+      const codes = ["es", "en", "fr", "de", "it", "pt", "bg", "ru", "ro", "uk"];
+      const pills = document.getElementById("langPills");
+      const params = new URLSearchParams(window.location.search);
+      let current = params.get("lang") || (navigator.language || "en").slice(0, 2).toLowerCase();
+      if (!PRIVACY_I18N[current]) current = "en";
+
+      function fillList(id, items) {
+        const el = document.getElementById(id);
+        el.innerHTML = "";
+        items.forEach((txt) => {
+          const li = document.createElement("li");
+          li.textContent = txt;
+          el.appendChild(li);
+        });
+      }
+
+      function render(code) {
+        const d = PRIVACY_I18N[code] || PRIVACY_I18N.en;
+        document.documentElement.lang = code;
+        document.title = d.title;
+        document.getElementById("backLink").textContent = d.back;
+        document.getElementById("backLink").href = "index.html?lang=" + encodeURIComponent(code);
+        document.getElementById("supportLink").href = "soporte.html?lang=" + encodeURIComponent(code);
+        document.getElementById("pTitle").textContent = d.title;
+        document.getElementById("pUpdated").textContent = d.updated;
+        document.getElementById("hController").textContent = d.hController;
+        document.getElementById("pController").textContent = d.pController;
+        document.getElementById("hVerify").textContent = d.hVerify;
+        fillList("listVerify", d.verify);
+        document.getElementById("hCollection").textContent = d.hCollection;
+        fillList("listCollection", d.collection);
+        document.getElementById("hRetention").textContent = d.hRetention;
+        fillList("listRetention", d.retention);
+        document.getElementById("hRights").textContent = d.hRights;
+        fillList("listRights", d.rights);
+        document.getElementById("hTech").textContent = d.hTech;
+        fillList("listTech", d.tech);
+        document.querySelectorAll(".lang-pill").forEach((b) => b.classList.toggle("active", b.dataset.lang === code));
+      }
+
+      codes.forEach((c) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "lang-pill";
+        btn.dataset.lang = c;
+        btn.textContent = c.toUpperCase();
+        btn.addEventListener("click", () => {
+          const url = new URL(window.location.href);
+          url.searchParams.set("lang", c);
+          window.history.replaceState({}, "", url);
+          render(c);
+        });
+        pills.appendChild(btn);
+      });
+
+      render(current);
+    })();
+  </script>
 </body>
 </html>
