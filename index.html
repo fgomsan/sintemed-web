@@ -285,6 +285,18 @@
     .btn-primary:hover, .btn-secondary:hover, .btn-store:hover { transform: translateY(-2px); }
     .btn-primary svg, .btn-store svg, .nav-cta svg { flex-shrink: 0; }
     .btn-store[hidden] { display: none !important; }
+    .btn-store.is-soon {
+      background: rgba(15, 29, 48, 0.58);
+      border: 1.5px dashed rgba(148, 163, 184, 0.45);
+      color: var(--muted);
+      box-shadow: none;
+      cursor: default;
+    }
+    .btn-store.is-soon:hover {
+      transform: none;
+      border-color: rgba(148, 163, 184, 0.6);
+      box-shadow: none;
+    }
 
     .verify-inline {
       display: inline-block;
@@ -887,8 +899,8 @@
             <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="9.2" height="9.2" fill="#f25022"/><rect x="12.8" y="2" width="9.2" height="9.2" fill="#7fba00"/><rect x="2" y="12.8" width="9.2" height="9.2" fill="#00a4ef"/><rect x="12.8" y="12.8" width="9.2" height="9.2" fill="#ffb900"/></svg>
             <span id="heroMsStoreLabel"></span>
           </a>
-          <a href="#descargar" id="heroPlayStoreBtn" class="btn-store" hidden>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 2.2c-.4.4-.6 1-.6 1.8v16c0 .8.2 1.4.6 1.8l.1.1 9-9v-.2l-9-9-.1-.1zm12 12.1-3-3v-.2l3-3 .1.1 3.6 2c1 .6 1 1.5 0 2.1l-3.6 2-.1 0zm-.1.7L12.5 12 3.6 20.9c.3.4.9.4 1.6 0l10.3-5.9zm0-6L5.2 3.1c-.7-.4-1.3-.4-1.6 0L12.5 12l3-3z"/></svg>
+          <a href="#descargar" id="heroPlayStoreBtn" class="btn-store is-soon" aria-disabled="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M3.6 2.2c-.4.4-.6 1-.6 1.8v16c0 .8.2 1.4.6 1.8l.1.1 9-9v-.2l-9-9-.1-.1z"/><path fill="#FBBC05" d="m15.6 14.3-3-3v-.2l3-3 .1.1 3.6 2c1 .6 1 1.5 0 2.1l-3.6 2-.1 0z"/><path fill="#EA4335" d="M15.5 15 12.5 12 3.6 20.9c.3.4.9.4 1.6 0L15.5 15z"/><path fill="#34A853" d="M15.5 9 5.2 3.1c-.7-.4-1.3-.4-1.6 0L12.5 12l3-3z"/></svg>
             <span id="heroPlayStoreLabel"></span>
           </a>
           <a href="#story" class="btn-secondary" data-i18n="ctaSecondary"></a>
@@ -1015,8 +1027,8 @@
               <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="9.2" height="9.2" fill="#f25022"/><rect x="12.8" y="2" width="9.2" height="9.2" fill="#7fba00"/><rect x="2" y="12.8" width="9.2" height="9.2" fill="#00a4ef"/><rect x="12.8" y="12.8" width="9.2" height="9.2" fill="#ffb900"/></svg>
               <span id="bottomMsStoreLabel"></span>
             </a>
-            <a href="#descargar" id="bottomPlayStoreBtn" class="btn-store" hidden>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 2.2c-.4.4-.6 1-.6 1.8v16c0 .8.2 1.4.6 1.8l.1.1 9-9v-.2l-9-9-.1-.1zm12 12.1-3-3v-.2l3-3 .1.1 3.6 2c1 .6 1 1.5 0 2.1l-3.6 2-.1 0zm-.1.7L12.5 12 3.6 20.9c.3.4.9.4 1.6 0l10.3-5.9zm0-6L5.2 3.1c-.7-.4-1.3-.4-1.6 0L12.5 12l3-3z"/></svg>
+            <a href="#descargar" id="bottomPlayStoreBtn" class="btn-store is-soon" aria-disabled="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M3.6 2.2c-.4.4-.6 1-.6 1.8v16c0 .8.2 1.4.6 1.8l.1.1 9-9v-.2l-9-9-.1-.1z"/><path fill="#FBBC05" d="m15.6 14.3-3-3v-.2l3-3 .1.1 3.6 2c1 .6 1 1.5 0 2.1l-3.6 2-.1 0z"/><path fill="#EA4335" d="M15.5 15 12.5 12 3.6 20.9c.3.4.9.4 1.6 0L15.5 15z"/><path fill="#34A853" d="M15.5 9 5.2 3.1c-.7-.4-1.3-.4-1.6 0L12.5 12l3-3z"/></svg>
               <span id="bottomPlayStoreLabel"></span>
             </a>
           </div>
@@ -1081,8 +1093,8 @@
     <img id="lightboxImg" src="" alt="" />
   </div>
 
-  <script src="i18n_10lang.js?v=20261126b"></script>
-  <script src="faq_10lang.js?v=20261126b"></script>
+  <script src="i18n_10lang.js?v=20261127c"></script>
+  <script src="faq_10lang.js?v=20261127c"></script>
   <script>
     (function () {
       // URLs públicas oficiales de tiendas (App Store y Microsoft Store ya activas):
@@ -1188,17 +1200,29 @@
         document.getElementById("heroMsStoreLabel").textContent = dict.ctaMsStoreLive || "Microsoft Store";
         document.getElementById("bottomMsStoreLabel").textContent = dict.ctaMsStoreLive || "Microsoft Store";
 
+        const playLabel = isPlayLive
+          ? (dict.ctaPlayStoreLive || "Google Play")
+          : (dict.ctaPlayStoreSoon || "Próximamente en Google Play");
         ["heroPlayStoreBtn", "bottomPlayStoreBtn"].forEach((id) => {
           const el = document.getElementById(id);
-          el.hidden = !isPlayLive;
+          el.hidden = false;
+          el.classList.toggle("is-soon", !isPlayLive);
           if (isPlayLive) {
             el.href = GOOGLE_PLAY_URL.trim();
             el.target = "_blank";
             el.rel = "noopener";
+            el.removeAttribute("aria-disabled");
+            el.onclick = null;
+          } else {
+            el.removeAttribute("href");
+            el.removeAttribute("target");
+            el.removeAttribute("rel");
+            el.setAttribute("aria-disabled", "true");
+            el.onclick = (ev) => ev.preventDefault();
           }
         });
-        document.getElementById("heroPlayStoreLabel").textContent = dict.ctaPlayStoreLive || "Google Play";
-        document.getElementById("bottomPlayStoreLabel").textContent = dict.ctaPlayStoreLive || "Google Play";
+        document.getElementById("heroPlayStoreLabel").textContent = playLabel;
+        document.getElementById("bottomPlayStoreLabel").textContent = playLabel;
 
         document.querySelectorAll(".lang-btn").forEach((b) => {
           b.classList.toggle("active", b.dataset.lang === code);
